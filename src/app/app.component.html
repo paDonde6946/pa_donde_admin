@@ -1,39 +1,36 @@
-<!-- <br><br><br><br><br> -->
-<div class="grid fluid justify-content-center pt-8">
-    <!-- ajustar a responsive -->
-    <p-card header="Pa' Donde - Administrador" subheader="Inicio de Sesión"
-        class="col-4 md-12 lg-12 sm-12 grid justify-content-center" styleClass="p-card-shadow"
-        style="text-align: center;">
-        <ng-template pTemplate="header">
+<router-outlet></router-outlet>
+<div class="box1" *ngIf="isHomeRouteActivated() != '/'">
+    <p-sidebar [(visible)]="display" [transitionOptions]="'400ms'">
+
+        <div>
             <div class="grid justify-content-center">
-                <div class="col-7">
-                    <img alt="Card" src="assets/image/logos/logo_padonde.png">
-                </div>
-            </div>
-        </ng-template>
-        <div class="col-12 md-12 lg-12 sm-12">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="text" pInputText placeholder="Correo electronico">
+                <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width: 280px;">
             </div>
         </div>
-        <div class="col-12 md-12 lg-12 sm-12">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input type="text" pInputText placeholder="Contraseña">
-            </div>
+        <div></div>
+        <hr style="background-color: green; height: 2px;">
+        <label class="labelSideBar"><b>Usuarios</b></label>
+        <div>
+            <i class="pi pi-user boton"></i><button pButton pRipple type="button" label="Usuarios"
+                class="p-button-success p-button-text"></button>
+        </div>
+        <div>
+            <i class="pi pi-star-o boton"></i><button pButton pRipple type="button" label="Vehiculos"
+                class="p-button-success p-button-text"></button>
+        </div>
+        <hr style="background-color: green; height: 2px;">
+        <label class="labelSideBar"><b>Configuración</b></label>
+        <div>
+            <i class="pi pi-cog boton"></i><button pButton pRipple type="button" label="Parametros"
+                class="p-button-success p-button-text"></button>
+        </div>
+        <div>
+            <i class="pi pi-cog boton"></i><button pButton pRipple type="button" label="Otras Opciones"
+                class="p-button-success p-button-text"></button>
         </div>
 
-        <ng-template pTemplate="footer">
-            <div class="grid justify-content-center">
-                <div class="col-7">
-                    <button pButton pRipple type="button" label="Iniciar Sesión"
-                        class="p-button-raised p-button-success"
-                        style="background-color: #E8771D; border:#E8771D ; "></button>
-                    <button pButton pRipple type="button" label="¿Olvidó su contraseña?"
-                        class="p-button-success p-button-text"></button>
-                </div>
-            </div>
-        </ng-template>
-    </p-card>
+    </p-sidebar>
+
+    <p-button type="text" (click)="display = true" icon="pi pi-bars"></p-button>
 </div>
+

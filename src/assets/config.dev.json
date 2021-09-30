@@ -1,0 +1,9 @@
+{
+  "env": {
+      "name": "dev"
+   },
+  "apiServer": {
+      "metadata": "https://metadata.demo.com/api/v1.0/",
+      "ruta": "http://localhost:3001/web/"
+  }
+}
