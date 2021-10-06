@@ -1,36 +1,37 @@
-<router-outlet></router-outlet>
-<div class="box1" *ngIf="isHomeRouteActivated() != '/'">
-    <p-sidebar [(visible)]="display" [transitionOptions]="'400ms'">
-
+<div class="grid box1" *ngIf="validarSesion() == true">
+    <div style="height: 100vh; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); background-color: white;"
+        class="col-2 md:col-2 lg:col-2">
+        <!-- width: 26.8vh; -->
         <div>
             <div class="grid justify-content-center">
-                <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width: 280px;">
+                <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width:80%;">
             </div>
         </div>
-        <div></div>
-        <hr style="background-color: green; height: 2px;">
-        <label class="labelSideBar"><b>Usuarios</b></label>
-        <div>
-            <i class="pi pi-user boton"></i><button pButton pRipple type="button" label="Usuarios"
-                class="p-button-success p-button-text"></button>
+        <br>
+        <div *ngFor="let item of itemsSide">
+            <button pButton label="{{item.label}}" icon="{{item.icon}}" [ngClass]="item.style"
+                (click)="cambiarEstadoAccion(item.id)"></button>
         </div>
-        <div>
-            <i class="pi pi-star-o boton"></i><button pButton pRipple type="button" label="Vehiculos"
-                class="p-button-success p-button-text"></button>
-        </div>
-        <hr style="background-color: green; height: 2px;">
-        <label class="labelSideBar"><b>Configuración</b></label>
-        <div>
-            <i class="pi pi-cog boton"></i><button pButton pRipple type="button" label="Parametros"
-                class="p-button-success p-button-text"></button>
-        </div>
-        <div>
-            <i class="pi pi-cog boton"></i><button pButton pRipple type="button" label="Otras Opciones"
-                class="p-button-success p-button-text"></button>
-        </div>
-
-    </p-sidebar>
-
-    <p-button type="text" (click)="display = true" icon="pi pi-bars"></p-button>
+    </div>
 </div>
-
+<!-- <div class="grid" *ngIf="isHomeRouteActivated() != '/'"> -->
+    <div class="grid" *ngIf="validarSesion() == true">
+    <div class="col-2 md:col-2 lg:col-2"></div>
+    <div class="col-10 md:col-10 lg:col-10" style="padding: 0rem">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+            </div>
+            <div class="p-toolbar-group-right">
+                <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
+                <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar" (click)="logout()"></button>
+            </div>
+        </p-toolbar>
+    </div>
+</div>
+<div class="grid">
+    <div class="col-2 md:col-2 lg:col-2"></div>
+    <div class="col-10 md:col-10 lg:col-10">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- <div class="col-1"></div> -->
+</div>

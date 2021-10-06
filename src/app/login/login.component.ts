@@ -69,18 +69,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (res: any) => {
           sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
-          sessionStorage.setItem(CONSTANTES_SESION.TOKEN, 'CRM:' + res.token);
-          console.log(res);
-          this.logueado = true;
-          this.router.navigate(['/inicio']);
+          sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+          this.router.navigate(['/usuarios']);
         },
         (err: any) => {
-          // this.spinner.hide();
-          if (err.status === 401) {
-            this.msj.error('Credenciales Incorrectas.');
-          } else {
-            return err;
-          }
+          console.log(err);
+          this.msj.error('Credenciales Incorrectas.');
         }
       );
   }
@@ -91,7 +85,7 @@ export class LoginComponent implements OnInit {
   }
 
   saveToken(token: any, user: any) {
-    sessionStorage.setItem(CONSTANTES_SESION.TOKEN, 'CRM:' + token.token);
+    sessionStorage.setItem(CONSTANTES_SESION.TOKEN, token.token);
     this.router.navigate(['/inicio']);
   }
 

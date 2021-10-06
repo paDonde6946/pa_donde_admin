@@ -3,11 +3,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { AppConfig } from '../../app.config';
+import { CONSTANTES_SESION } from '../_util/services-util';
+
+const token: any = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'x-token': token
   })
 };
 
@@ -17,12 +21,12 @@ const httpOptions = {
 
 export class CoreService {
 
-  protected baseUrl: string = 'http://localhost:3001/web';
+  protected baseUrl: string = '/web';
 
   constructor(private http: HttpClient) { }
 
   get(endpoint: string) {
-    return this.http.get(this.baseUrl + endpoint).pipe(
+    return this.http.get(this.baseUrl + endpoint, httpOptions).pipe(
       catchError(this.handleError)
     );
   }

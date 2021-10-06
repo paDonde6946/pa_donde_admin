@@ -11,23 +11,22 @@ import { AppConfig } from './app.config';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InicioComponent } from './inicio/inicio.component';
 import { MenuComponent } from './menu/menu.component';
 import { SidebarModule } from 'primeng/sidebar';
-import { HeaderComponent } from './header/header.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BasePanelMenuItem, PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem, MessageService } from 'primeng/api';
 import { AuthGuard } from './core/_guards/auth.guard';
-
+import {MenubarModule} from 'primeng/menubar';
+import {ToolbarModule} from 'primeng/toolbar';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    InicioComponent,
+    
     MenuComponent,
-    HeaderComponent,
     UsuariosComponent,
   ],
   imports: [
@@ -43,6 +42,9 @@ import { AuthGuard } from './core/_guards/auth.guard';
     BrowserAnimationsModule,
     SidebarModule,
     PanelMenuModule,
+    MenubarModule,
+    ToolbarModule,
+    TableModule
   ],
   providers: [AuthGuard, MessageService],
   bootstrap: [AppComponent]

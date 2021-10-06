@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const token = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
         const correo = sessionStorage.getItem(CONSTANTES_SESION.CORREO);
-        if (token !== undefined && token !== null && token.indexOf('CRM:') > -1 && correo !== null) {
+        if (token !== undefined && token !== null && token.indexOf('') > -1 && correo !== null) {
             return true;
         } else {
             // not logged in so redirect to login page with the return url

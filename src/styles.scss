@@ -1,3 +1,101 @@
 body{
     background-color: whitesmoke;
 }
+.titulo {
+    padding-left: 30px;
+}
+
+.box1{
+    // width: 90px;
+    height: 0px;
+}
+
+h1{
+    color: #E8771D;
+}
+
+.boton{
+  padding-bottom: 11px;
+}
+
+.labelSideBar{
+  font-size: 25px;
+  color: #5D992C;
+}
+
+.box {
+    border: 1px solid rgba(0, 0, 0, .0625)!important;
+    background: white;
+    border-radius: 25px;
+    margin: 40px;
+    display: flow-root;
+}
+
+.lineaMenu{
+    background-color: green; height: 2px;
+}
+
+.noSeleccionado{
+    background-color: transparent!important;
+    color: #5D992C;
+}
+.p-button{
+    background-color: #5D992C;
+    border: #E8771D;
+    width: 100%;
+    margin-bottom: 11px;
+    border-radius: 15px;
+}
+.botonTopBar{
+    background-color: #5D992C;
+    border: #E8771D;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 15px;
+    height: 45px;
+}
+
+.botonNaranja{
+    background-color: #E8771D;
+    border: #E8771D;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 15px;
+    height: 45px;
+}
+
+.botonRojo{
+    background-color: red;
+    border: red;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 15px;
+    height: 45px;
+}
+.p-button:enabled:hover {
+    background: #5D992C!important;
+    color: #ffffff;
+    border-color: #5D992C!important;
+}
+
+.p-button:enabled:focus {
+    background: #5D992C!important;
+    color: #ffffff;
+    border-color: #5D992C!important;
+}
+
+.p-menubar {
+    margin-left: auto;
+}
+.p-toolbar {
+    background: white;
+    border: 0px solid #dee2e6;
+    padding: 1rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 2px -2px rgb(0 0 0 / 0.2);
+    background-color: white;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #ffffff;
+}
