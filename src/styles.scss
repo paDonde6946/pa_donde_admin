@@ -55,6 +55,7 @@ h1{
     height: 45px;
 }
 
+
 .botonNaranja{
     background-color: #E8771D;
     border: #E8771D;
@@ -64,9 +65,19 @@ h1{
     height: 45px;
 }
 
-.botonRojo{
-    background-color: red;
-    border: red;
+.botonTransparente{
+    background-color: transparent;
+    border: transparent;
+    color: #E8771D;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 15px;
+    height: 45px;
+}
+
+.botonVerde{
+    background-color: #5D992C;
+    border: #5D992C;
     width: auto;
     margin-left: 10px;
     margin-top: 15px;
@@ -92,8 +103,10 @@ h1{
     border: 0px solid #dee2e6;
     padding: 1rem;
     border-radius: 3px;
-    box-shadow: 0 4px 2px -2px rgb(0 0 0 / 0.2);
     background-color: white;
+}
+.toolbarSuperior{
+    box-shadow: 0 4px 2px -2px rgb(0 0 0 / 0.2);
 }
 
 .p-datatable .p-datatable-thead > tr > th {

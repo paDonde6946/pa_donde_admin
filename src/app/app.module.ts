@@ -15,11 +15,14 @@ import { MenuComponent } from './menu/menu.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BasePanelMenuItem, PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { AuthGuard } from './core/_guards/auth.guard';
 import {MenubarModule} from 'primeng/menubar';
 import {ToolbarModule} from 'primeng/toolbar';
 import {TableModule} from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -44,9 +47,12 @@ import {TableModule} from 'primeng/table';
     PanelMenuModule,
     MenubarModule,
     ToolbarModule,
-    TableModule
+    TableModule,
+    DropdownModule,
+    ConfirmDialogModule,
+    InputSwitchModule
   ],
-  providers: [AuthGuard, MessageService],
+  providers: [AuthGuard, MessageService,ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

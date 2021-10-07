@@ -15,23 +15,27 @@
     </div>
 </div>
 <!-- <div class="grid" *ngIf="isHomeRouteActivated() != '/'"> -->
-    <div class="grid" *ngIf="validarSesion() == true">
+<div class="grid" *ngIf="validarSesion() == true">
     <div class="col-2 md:col-2 lg:col-2"></div>
     <div class="col-10 md:col-10 lg:col-10" style="padding: 0rem">
-        <p-toolbar>
-            <div class="p-toolbar-group-left">
-            </div>
-            <div class="p-toolbar-group-right">
-                <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
-                <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar" (click)="logout()"></button>
-            </div>
-        </p-toolbar>
+        <div class="toolbarSuperior">
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                </div>
+                <div class="p-toolbar-group-right">
+                    <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
+                    <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar"
+                        (click)="logout()"></button>
+                </div>
+            </p-toolbar>
+        </div>
     </div>
 </div>
 <div class="grid">
     <div class="col-2 md:col-2 lg:col-2"></div>
     <div class="col-10 md:col-10 lg:col-10">
-        <router-outlet></router-outlet>
+        <router-outlet>
+        </router-outlet>
     </div>
     <!-- <div class="col-1"></div> -->
 </div>

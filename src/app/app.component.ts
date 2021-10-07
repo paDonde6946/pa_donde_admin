@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.logueado = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
-    console.log(this.logueado);
     this.items = [
 
       {

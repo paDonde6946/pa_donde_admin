@@ -1,42 +1,160 @@
+<p-toast position="top-center" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [baseZIndex]="5000"
+    key="tc">
+</p-toast>
 <div class="box">
-    <h1 class="titulo">Usuarios</h1>
-    <p-toolbar>
-        <div class="p-toolbar-group-left">
-            <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja"></button>
-        </div>
-        <div class="p-toolbar-group-right">
-        </div>
-    </p-toolbar>
-    <p-table [columns]="columnas" [value]="registroLista" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-        responsiveLayout="scroll" currentPageReportTemplate="Total Registros: {totalRecords}"
-        [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    <b>{{col.header}}</b>
-                </th>
-                <th style="width: 270px; text-align:center"><b>Acciones</b></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    <span class="p-column-title">{{col.header}}</span>
+    <div *ngIf="!prepararUsuario">
+        <h1 class="titulo">Usuarios</h1>
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja"
+                    (click)="prepararNuevo()"></button>
+            </div>
+            <div class="p-toolbar-group-right">
+            </div>
+        </p-toolbar>
+        <p-table [columns]="columnas" [value]="registroLista" [paginator]="true" [rows]="5"
+            [showCurrentPageReport]="true" responsiveLayout="scroll"
+            currentPageReportTemplate="Total Registros: {totalRecords}">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        <b>{{col.header}}</b>
+                    </th>
+                    <th style="width: 270px; text-align:center"><b>Acciones</b></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        <span class="p-column-title">{{col.header}}</span>
 
-                    {{ rowData[col.field] ? rowData[col.field] : 'No disponible' }}
-                </td>
-                <td>
-                    <button pButton label="Editar" class="botonNaranja"
-                        icon="pi pi-pencil"
-                        pTooltip="Editar">
-                    </button>
-                    <button pButton label="Eliminar" class="botonRojo"
-                    icon="pi pi-times"
-                    pTooltip="Eliminar">
-                </button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+                        {{ rowData[col.field] ? col.field=='estado' ? labelEstado(rowData[col.field]) :
+                        rowData[col.field]: 'No disponible' }}
+                    </td>
+                    <td>
+                        <button pButton label="Editar" class="botonNaranja" icon="pi pi-pencil" pTooltip="Editar"
+                            (click)="editarUsuario(rowData)">
+                        </button>
+                        <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit" pTooltip="Cambiar Estado"
+                        (click)="actualizarEstado(rowData['uid'])">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div *ngIf="prepararUsuario">
+        <h1 class="titulo" *ngIf="botonGuardar">Agregar Usuario</h1>
+        <h1 class="titulo" *ngIf="botonEditar">Editar Usuario</h1>
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <button pButton icon="pi pi-arrow-left" label="Volver" class="botonVerde" (click)="volver()"></button>
+            </div>
+            <div class="p-toolbar-group-right">
+            </div>
+        </p-toolbar>
 
+        <form [formGroup]="formularioUsuario" class="posicion-form">
+            <div class="p-fluid p-formgrid grid">
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="correo">Correo:<span style="color: #a94442;">*</span></label>
+                        <input id="correo" type="text" pInputText placeholder="Correo" formControlName="correo">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('correo')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <div class="col-12 md:col-6 grid" *ngIf="!botonEditar">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="contrasenia">Contraseña:<span style="color: #a94442;">*</span></label>
+                        <input id="contrasenia" type="text" pInputText placeholder="Contraseña"
+                            formControlName="contrasenia">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('contrasenia')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="nombre">Nombre:<span style="color: #a94442;">*</span></label>
+                        <input id="nombre" type="text" pInputText placeholder="Nombre" formControlName="nombre">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('nombre')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="apellido">Apellido:<span style="color: #a94442;">*</span></label>
+                        <input id="apellido" type="text" pInputText placeholder="Apellido" formControlName="apellido">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('apellido')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="telefono">Teléfono:<span style="color: #a94442;">*</span></label>
+                        <input id="telefono" type="number" pInputText placeholder="Teléfono" formControlName="celular">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('celular')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <!-- <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="tipoUsuario">Tipo Usuario<span style="color: #a94442;">*</span></label>
+                        <p-dropdown inputId="tipoUsuario" placeholder="SELECCIONAR" optionLabel="label" [options]="tipo"
+                            formControlName="tipoUsuario">
+                        </p-dropdown>
+                        <small style="color: #a94442;" *ngIf="campoNoValido('tipoUsuario')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-12 md:col-1"></div>
+                    <div class="p-field md:col-10 col-12">
+                        <label for="estado">Estado<span style="color: #a94442;">*</span></label>
+                        <p-dropdown inputId="estado" placeholder="SELECCIONAR" optionLabel="label" [options]="estado"
+                            formControlName="estado">
+                        </p-dropdown>
+                        <small style="color: #a94442;" *ngIf="campoNoValido('tipoUsuario')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div> -->
+            </div>
+
+            <div>
+                <p-toolbar>
+                    <div class="ui-toolbar-group-left">
+                        <button *ngIf="botonGuardar" pButton label="Guardar" class="botonNaranja" icon="pi pi-save"
+                            pTooltip="Guardar" (click)="agregar()">
+                        </button>
+                        <button *ngIf="botonEditar" pButton label="Editar" class="botonNaranja" icon="pi pi-save"
+                            pTooltip="Editar" (click)="actualizar()">
+                        </button>
+                    </div>
+                    <div class="ui-toolbar-group-right">
+                    </div>
+                </p-toolbar>
+            </div>
+        </form>
+    </div>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 </div>
