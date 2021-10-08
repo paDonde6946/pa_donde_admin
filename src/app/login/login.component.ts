@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AlertasService } from '../core/_services/alerta.service';
 import { CoreService } from '../core/_services/core.services';
-import { AuthGuard } from '../core/_guards/auth.guard';
 import { CONSTANTES_SESION } from '../core/_util/services-util';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [AlertasService, MessageService],
+  providers: [AlertasService, MessageService, RouterTestingModule],
 })
 export class LoginComponent implements OnInit {
   protected baseUrl: string = 'http://localhost:3001/web';
@@ -24,7 +23,7 @@ export class LoginComponent implements OnInit {
     contrasenia: new FormControl('', Validators.compose([Validators.required])),
   });
 
-  constructor(private http: HttpClient,
+  constructor(
     public coreService: CoreService,
     public msj: AlertasService,
     public messageService: MessageService,

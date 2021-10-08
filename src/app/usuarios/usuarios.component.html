@@ -28,7 +28,8 @@
                     <td *ngFor="let col of columns">
                         <span class="p-column-title">{{col.header}}</span>
 
-                        {{ rowData[col.field] ? col.field=='estado' ? labelEstado(rowData[col.field]) :
+                        
+                        {{ rowData[col.field] != null ? col.field=='estado' ? labelEstado(rowData[col.field]) :
                         rowData[col.field]: 'No disponible' }}
                     </td>
                     <td>
@@ -36,8 +37,8 @@
                             (click)="editarUsuario(rowData)">
                         </button>
                         <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit" pTooltip="Cambiar Estado"
-                        (click)="actualizarEstado(rowData['uid'])">
-                        </button>
+                        (click)="actualizarEstado(rowData)">
+                        </button> <!--['uid']-->
                     </td>
                 </tr>
             </ng-template>

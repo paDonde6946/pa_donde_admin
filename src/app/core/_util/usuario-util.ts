@@ -4,6 +4,6 @@ export const tipoUsuario = [
 ]
 
 export const estadoUsuario = [
+    { label: 'Inactivo', value: '0' },
     { label: 'Activo', value: '1' },
-    { label: 'Inactivo', value: '0' }
 ]

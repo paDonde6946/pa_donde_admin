@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CONSTANTES_SESION } from './core/_util/services-util';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [LoginComponent, MessageService]
+  providers: [LoginComponent, MessageService,  HttpClient]
 })
 export class AppComponent implements OnInit {
-
+  title: string = 'PaDondeAdmin';
   display: any;
   logueado: any;
   items: MenuItem[] = [];

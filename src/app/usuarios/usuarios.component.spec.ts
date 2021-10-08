@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MessageService } from 'primeng/api';
 
 import { UsuariosComponent } from './usuarios.component';
 
@@ -8,7 +11,9 @@ describe('UsuariosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsuariosComponent ]
+      declarations: [ UsuariosComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [MessageService],
     })
     .compileComponents();
   });

@@ -1,3 +1,4 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
@@ -85,17 +86,27 @@ export class UsuariosComponent implements OnInit {
 
   // Boton guardar Usuario
   agregar() {
-    let data = this.formularioUsuario.valid;
-    if (data) {
-      this.confirmationService.confirm({
-        message: '¿Desea guardar este usuario?',
-        accept: () => {
-          this.formularioUsuario.markAllAsTouched();
-          this.putGuardarUsuario();
-        }
-      });
+    let correo = this.formularioUsuario.value.correo.toString().split("@");
+
+    if (correo[1] != 'unbosque.edu.co') {
+      this.msj.alerta('El correo ingresado no es válido.')
     } else {
-      this.formularioUsuario.markAllAsTouched();
+      if (this.formularioUsuario.value.celular != null && this.formularioUsuario.value.celular.toString().length != 10) {
+        this.msj.alerta('El número de teléfono no válido.')
+      } else {
+        let data = this.formularioUsuario.valid;
+        if (data) {
+          this.confirmationService.confirm({
+            message: '¿Desea guardar este usuario?',
+            accept: () => {
+              this.formularioUsuario.markAllAsTouched();
+              this.putGuardarUsuario();
+            }
+          });
+        } else {
+          this.formularioUsuario.markAllAsTouched();
+        }
+      }
     }
   }
   // Boton editar Usuario
@@ -131,7 +142,6 @@ export class UsuariosComponent implements OnInit {
       apellido: this.formularioUsuario.value.apellido,
       celular: this.formularioUsuario.value.celular
     };
-    console.log(params);
 
     this.coreService.putWithOutParam('/login/usuario/registrar', params).subscribe(
       (res: any) => {
@@ -151,13 +161,26 @@ export class UsuariosComponent implements OnInit {
   }
   // Metodo de boton editar usuario 
   actualizar() {
-    this.confirmationService.confirm({
-      message: '¿Desea actualizar esta consulta?',
-      accept: () => {
-        this.formularioUsuario.markAllAsTouched();
-        this.postActualizarUsuario();
+
+    let correo = this.formularioUsuario.value.correo.toString().split("@");
+
+    if (correo[1] != 'unbosque.edu.co') {
+      this.msj.alerta('El correo ingresado no es válido.')
+    } else {
+      if (this.formularioUsuario.value.celular != null && this.formularioUsuario.value.celular.toString().length != 10) {
+        this.msj.alerta('El número de teléfono no válido.')
+      } else {
+        let data = this.formularioUsuario.valid;
+        this.confirmationService.confirm({
+          message: '¿Desea actualizar esta consulta?',
+          accept: () => {
+            this.formularioUsuario.markAllAsTouched();
+            this.postActualizarUsuario();
+          }
+        });
       }
-    });
+    }
+
   }
 
   // Metodo para actualizar un usuario
@@ -190,8 +213,9 @@ export class UsuariosComponent implements OnInit {
   }
 
   actualizarEstado(data: any) {
+    console.log(data);
     let params = {
-      uid: data
+      uid: data.uid
     }
     this.coreService.post('/usuario/cambiarEstadoUsuario', params).subscribe(
       (res: any) => {
@@ -215,15 +239,17 @@ export class UsuariosComponent implements OnInit {
     return this.formularioUsuario.get(campo)?.invalid && this.formularioUsuario.get(campo)?.touched;
   }
 
-  labelEstado(estado: any) {
+  labelEstado(id: any) {
     let label = '';
-    if (this.estado != []) {
-      this.estado.forEach(element => {
-        if (element.value == estado) {
-          label = element.label;
-        }
-      });
-    }
+    this.estado.forEach(element => {
+      console.log(element.value);
+      console.log(id);
+      if (element.value == id.toString()) {
+        // console.log(typeof(id));
+        label = element.label;
+      }
+      console.log(element.value == id.toString());
+    });
     return label;
   }
 
