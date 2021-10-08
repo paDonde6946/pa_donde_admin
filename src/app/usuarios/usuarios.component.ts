@@ -213,7 +213,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   actualizarEstado(data: any) {
-    console.log(data);
     let params = {
       uid: data.uid
     }
@@ -242,13 +241,9 @@ export class UsuariosComponent implements OnInit {
   labelEstado(id: any) {
     let label = '';
     this.estado.forEach(element => {
-      console.log(element.value);
-      console.log(id);
       if (element.value == id.toString()) {
-        // console.log(typeof(id));
         label = element.label;
       }
-      console.log(element.value == id.toString());
     });
     return label;
   }
