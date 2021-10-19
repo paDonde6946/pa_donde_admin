@@ -17,10 +17,18 @@ export class LoginComponent implements OnInit {
   protected baseUrl: string = 'http://localhost:3001/web';
   // Login
   logueado: boolean = false;
+
+  // Estado recuperar Contrasenia
+  recuperar: boolean = false;
+
   formBuilder: FormBuilder;
   formularioLogin = new FormGroup({
     correo: new FormControl('', Validators.compose([Validators.required])),
     contrasenia: new FormControl('', Validators.compose([Validators.required])),
+  });
+
+  formularioRecuperar = new FormGroup({
+    correo: new FormControl('', Validators.compose([Validators.required])),
   });
 
   constructor(
@@ -81,6 +89,46 @@ export class LoginComponent implements OnInit {
   logout() {
     sessionStorage.clear();
     this.router.navigate(['/']);
+  }
+
+  recuperarContrasenia() {
+    this.recuperar = true;
+  }
+
+  enviarRecuperar() {
+    let correo = this.formularioRecuperar.value.correo.toString().split("@");
+
+    if (this.formularioRecuperar.value.correo == '') {
+      this.msj.alerta('Debe ingresar un correo para recuperar su contraseña.')
+    } else if (correo[1] != 'unbosque.edu.co') {
+      this.msj.alerta('El correo ingresado no es válido.')
+    } else {
+      let params = {
+        correo: this.formularioRecuperar.value.correo
+      }
+      console.log(params.correo);
+      this.coreService.post('/login/admin/olvidarContrasenia', params).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.msj.info('Se le ha enviado un mensaje a su correo electronico');
+          this.recuperar = false;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      )
+    }
+
+  }
+
+  volver() {
+    this.recuperar = false;
+  }
+
+  enterRecuperar(event: any) {
+    if (event.key === 'Enter') {
+      this.enviarRecuperar();
+    }
   }
 
   saveToken(token: any, user: any) {

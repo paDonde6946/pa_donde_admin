@@ -196,7 +196,6 @@ export class UsuariosComponent implements OnInit {
     console.log(params);
     this.coreService.post('/usuario/actualizarUsuario', params).subscribe(
       (res: any) => {
-        console.log(res);
         this.msj.info("Usuario actualizado exitosamente");
         this.getListadoUsuarios();
         this.prepararUsuario = false;
