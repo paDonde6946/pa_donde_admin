@@ -22,7 +22,6 @@ h1{
   font-size: 25px;
   color: #5D992C;
 }
-
 .box {
     border: 1px solid rgba(0, 0, 0, .0625)!important;
     background: white;
@@ -30,7 +29,6 @@ h1{
     margin: 40px;
     display: flow-root;
 }
-
 .lineaMenu{
     background-color: green; height: 2px;
 }
@@ -112,3 +110,10 @@ h1{
 .p-datatable .p-datatable-thead > tr > th {
     background: #ffffff;
 }
+
+.p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #e9ecef;
+    border-width: 0 0 1px 0;
+    padding: 0.5rem 1rem;
+  }

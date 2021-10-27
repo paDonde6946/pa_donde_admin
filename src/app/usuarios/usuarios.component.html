@@ -13,7 +13,7 @@
             </div>
         </p-toolbar>
         <p-table [columns]="columnas" [value]="registroLista" [paginator]="true" [rows]="5"
-            [showCurrentPageReport]="true" responsiveLayout="scroll"
+            [showCurrentPageReport]="true" responsiveLayout="stack"
             currentPageReportTemplate="Total Registros: {totalRecords}">
             <ng-template pTemplate="header" let-columns>
                 <tr>
@@ -57,9 +57,9 @@
 
         <form [formGroup]="formularioUsuario" class="posicion-form">
             <div class="p-fluid p-formgrid grid">
-                <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
+                <div class="col-12 md:col-6 lg:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
                         <label for="correo">Correo:<span style="color: #a94442;">*</span></label>
                         <input id="correo" type="text" pInputText placeholder="Correo" formControlName="correo">
                         <small style="color: #a94442;" *ngIf="campoNoValido('correo')">Campo
@@ -69,8 +69,8 @@
                 </div>
 
                 <div class="col-12 md:col-6 grid" *ngIf="!botonEditar">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
                         <label for="contrasenia">Contraseña:<span style="color: #a94442;">*</span></label>
                         <input id="contrasenia" type="text" pInputText placeholder="Contraseña"
                             formControlName="contrasenia">
@@ -82,8 +82,8 @@
 
 
                 <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
                         <label for="nombre">Nombre:<span style="color: #a94442;">*</span></label>
                         <input id="nombre" type="text" pInputText placeholder="Nombre" formControlName="nombre">
                         <small style="color: #a94442;" *ngIf="campoNoValido('nombre')">Campo
@@ -93,8 +93,8 @@
                 </div>
 
                 <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
                         <label for="apellido">Apellido:<span style="color: #a94442;">*</span></label>
                         <input id="apellido" type="text" pInputText placeholder="Apellido" formControlName="apellido">
                         <small style="color: #a94442;" *ngIf="campoNoValido('apellido')">Campo
@@ -104,8 +104,8 @@
                 </div>
 
                 <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
                         <label for="telefono">Teléfono:<span style="color: #a94442;">*</span></label>
                         <input id="telefono" type="number" pInputText placeholder="Teléfono" formControlName="celular">
                         <small style="color: #a94442;" *ngIf="campoNoValido('celular')">Campo
@@ -113,32 +113,6 @@
                     </div>
                     <div class="col-12 md:col-1"></div>
                 </div>
-
-                <!-- <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
-                        <label for="tipoUsuario">Tipo Usuario<span style="color: #a94442;">*</span></label>
-                        <p-dropdown inputId="tipoUsuario" placeholder="SELECCIONAR" optionLabel="label" [options]="tipo"
-                            formControlName="tipoUsuario">
-                        </p-dropdown>
-                        <small style="color: #a94442;" *ngIf="campoNoValido('tipoUsuario')">Campo
-                            Obligatorio</small>
-                    </div>
-                    <div class="col-12 md:col-1"></div>
-                </div>
-
-                <div class="col-12 md:col-6 grid">
-                    <div class="col-12 md:col-1"></div>
-                    <div class="p-field md:col-10 col-12">
-                        <label for="estado">Estado<span style="color: #a94442;">*</span></label>
-                        <p-dropdown inputId="estado" placeholder="SELECCIONAR" optionLabel="label" [options]="estado"
-                            formControlName="estado">
-                        </p-dropdown>
-                        <small style="color: #a94442;" *ngIf="campoNoValido('tipoUsuario')">Campo
-                            Obligatorio</small>
-                    </div>
-                    <div class="col-12 md:col-1"></div>
-                </div> -->
             </div>
 
             <div>
