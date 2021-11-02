@@ -15,11 +15,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 })
 export class LoginComponent implements OnInit {
   protected baseUrl: string = 'http://localhost:3001/web';
-  // Login
-  logueado: boolean = false;
-
-  // Estado recuperar Contrasenia
+  // Estados
+  loginAdmin: boolean = true;
   recuperar: boolean = false;
+  cambiarContrasenia: boolean = false;
+
+  // Id usuario
+  uid: any;
+  token: any;
 
   formBuilder: FormBuilder;
   formularioLogin = new FormGroup({
@@ -30,6 +33,11 @@ export class LoginComponent implements OnInit {
   formularioRecuperar = new FormGroup({
     correo: new FormControl('', Validators.compose([Validators.required])),
   });
+
+  formularioNuevaContrasenia = new FormGroup({
+    contrasenia1: new FormControl('', Validators.compose([Validators.required])),
+    contrasenia2: new FormControl('', Validators.compose([Validators.required])),
+  })
 
   constructor(
     public coreService: CoreService,
@@ -75,15 +83,53 @@ export class LoginComponent implements OnInit {
     this.coreService.getWithParams('/login/admin', params)
       .subscribe(
         (res: any) => {
-          sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
-          sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
-          this.router.navigate(['/usuarios']);
+          if (res.usuario.cambio_contrasenia == 1) {
+            this.loginAdmin = false;
+            this.cambiarContrasenia = true;
+            this.uid = res.usuario.uid;
+            this.token = res.token
+            console.log(res);
+            console.log(this.token);
+          } else {
+            this.loginAdmin = false;
+            this.recuperar = false;
+            this.cambiarContrasenia = false;
+            sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
+            sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+            this.router.navigate(['/usuarios']);
+          }
         },
         (err: any) => {
           console.log(err);
           this.msj.error('Credenciales Incorrectas.');
         }
       );
+  }
+
+  guardarContrasenia() {
+
+    let params = {
+      uid: this.uid,
+      contrasenia: this.formularioNuevaContrasenia.value.contrasenia1
+    }
+    console.log(params);
+    this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
+
+      (res: any) => {
+        // sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
+        // sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
+        console.log(res);
+        // this.router.navigate(['/usuarios']);
+        this.cambiarContrasenia = false;
+        this.recuperar = false;
+        this.loginAdmin = true;
+        this.msj.info('Contraseña actualizada exitosamente');
+      },
+      (err: any) => {
+        console.log(err);
+        // this.msj.error('Credenciales Incorrectas.');
+      }
+    )
   }
 
   logout() {
@@ -93,6 +139,8 @@ export class LoginComponent implements OnInit {
 
   recuperarContrasenia() {
     this.recuperar = true;
+    this.loginAdmin = false;
+    this.cambiarContrasenia = false;
   }
 
   enviarRecuperar() {
@@ -106,12 +154,14 @@ export class LoginComponent implements OnInit {
       let params = {
         correo: this.formularioRecuperar.value.correo
       }
-      console.log(params.correo);
+      console.log(params);
       this.coreService.post('/login/admin/olvidarContrasenia', params).subscribe(
         (res: any) => {
           console.log(res);
           this.msj.info('Se le ha enviado un mensaje a su correo electronico');
           this.recuperar = false;
+          this.cambiarContrasenia = false;
+          this.loginAdmin = true;
         },
         (err: any) => {
           console.log(err);
@@ -122,12 +172,20 @@ export class LoginComponent implements OnInit {
   }
 
   volver() {
+    this.loginAdmin = true;
     this.recuperar = false;
+    this.cambiarContrasenia = false;
   }
 
   enterRecuperar(event: any) {
     if (event.key === 'Enter') {
       this.enviarRecuperar();
+    }
+  }
+
+  enterCambiarContrasenia(event: any) {
+    if (event.key === 'Enter') {
+      // this.login();
     }
   }
 
