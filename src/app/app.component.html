@@ -1,41 +1,37 @@
-<div class="grid box1" *ngIf="validarSesion() == true">
-    <div style="height: 100vh; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); background-color: white;"
-        class="col-2 md:col-2 lg:col-2">
-        <!-- width: 26.8vh; -->
-        <div>
-            <div class="grid justify-content-center">
-                <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width:80%;">
-            </div>
-        </div>
-        <br>
-        <div *ngFor="let item of itemsSide">
+<div class="sidebar" *ngIf="validarSesion() == true">
+    <div class="grid justify-content-center">
+        <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width:80%;">
+    </div>
+    <br>
+    <div *ngFor="let item of itemsSide" class="item">
+        <button pButton label="{{item.label}}" icon="{{item.icon}}" [ngClass]="item.style"
+            (click)="cambiarEstadoAccion(item.id)"></button>
+    </div>
+</div>
+<div class="movil">
+    <button pButton icon="pi pi-bars" class="boton-menu" (click)="mostarMenu()"></button>
+    <div class="menu-movil" [ngClass]="{'mostrar': mostrarMenu}">
+        <div *ngFor="let item of itemsSide" class="item">
             <button pButton label="{{item.label}}" icon="{{item.icon}}" [ngClass]="item.style"
                 (click)="cambiarEstadoAccion(item.id)"></button>
         </div>
     </div>
 </div>
-<!-- <div class="grid" *ngIf="isHomeRouteActivated() != '/'"> -->
-<div class="grid" *ngIf="validarSesion() == true">
-    <div class="col-2 md:col-2 lg:col-2"></div>
-    <div class="col-10 md:col-10 lg:col-10" style="padding: 0rem">
-        <div class="toolbarSuperior">
-            <p-toolbar>
-                <div class="p-toolbar-group-left">
-                </div>
-                <div class="p-toolbar-group-right">
-                    <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
-                    <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar"
-                        (click)="logout()"></button>
-                </div>
-            </p-toolbar>
+
+<div class="toolbarSuperior" *ngIf="validarSesion() == true">
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
         </div>
-    </div>
+        <div class="p-toolbar-group-right">
+            <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
+            <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar"
+                (click)="logout()"></button>
+        </div>
+    </p-toolbar>
 </div>
-<div class="grid">
-    <div class="col-2 md:col-2 lg:col-2"></div>
-    <div class="col-10 md:col-10 lg:col-10">
-        <router-outlet>
-        </router-outlet>
-    </div>
-    <!-- <div class="col-1"></div> -->
+
+<div class="continer-center" >
+    <router-outlet>
+    </router-outlet>
 </div>
+

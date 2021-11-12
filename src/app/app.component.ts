@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   logueado: any;
   items: MenuItem[] = [];
   itemsSide: MenuItem[] = [];
+  mostrarMenu : any = false;
   constructor(
     protected router: Router,
   ) {
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit {
         icon: 'pi-star-o',
         style: { 'noSeleccionado': true },
         id: '2',
-        title: '/usuarios'
+        title: '/vehiculos'
       },
       {
         label: 'Parametros',
@@ -104,6 +105,12 @@ export class AppComponent implements OnInit {
   logout() {
     sessionStorage.clear();
     this.router.navigate(['/']);
+  }
+
+  mostarMenu(){
+    this.mostrarMenu =!this.mostrarMenu;
+    console.log(this.mostrarMenu);
+  
   }
 }
 

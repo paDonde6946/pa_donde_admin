@@ -1,0 +1,20 @@
+.continer-center{
+    padding-left: 260px;
+    padding-top: 100px;
+}
+
+.position-static{
+    position: static;
+}
+
+.p-datatable {
+    position: static !important;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+}

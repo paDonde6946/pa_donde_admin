@@ -1,0 +1,53 @@
+@media only screen and (max-width: 800px) {
+
+    .sidebar{
+        display: none;
+    }
+    
+    .boton-menu:focus{
+        box-shadow: none;
+    }
+    .menu-movil{
+        height: 0px;
+        opacity: 0;
+        transition-property: height;
+        transition-duration: 2s;
+        transition-timing-function: linear;
+        transition-delay: 1s;
+    }
+    .menu-movil.mostrar{
+        opacity: 1;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .movil{
+        display: none;
+
+    }
+    .boton-menu{
+        display: none;
+    }
+}
+
+
+
+.sidebar{
+    height: 100%;
+    width: 250px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    position: fixed;
+    max-width: 300px;
+    min-width: 200px;
+    background-color: white;
+}
+
+
+.sidebar img{
+
+    height: 50%;
+}
+
+.item{
+
+}

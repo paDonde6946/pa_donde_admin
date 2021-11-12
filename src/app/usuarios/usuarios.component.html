@@ -6,7 +6,7 @@
         <h1 class="titulo">Usuarios</h1>
         <p-toolbar>
             <div class="p-toolbar-group-left">
-                <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja"
+                <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja position-static"
                     (click)="prepararNuevo()"></button>
             </div>
             <div class="p-toolbar-group-right">
@@ -14,7 +14,7 @@
         </p-toolbar>
         <p-table [columns]="columnas" [value]="registroLista" [paginator]="true" [rows]="5"
             [showCurrentPageReport]="true" responsiveLayout="stack"
-            currentPageReportTemplate="Total Registros: {totalRecords}">
+            currentPageReportTemplate="Total Registros: {totalRecords}" class="position-static">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th *ngFor="let col of columns">

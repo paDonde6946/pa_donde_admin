@@ -1,27 +1,37 @@
-body{
+@import 'style/_variables_globales.scss';
+@import 'style/style_sidebar.scss';
+@import 'style/style_navbar.scss';
+@import 'style/syle_general.scss';
+
+
+body {
     background-color: whitesmoke;
+    margin-left: 0px;
+    margin-top: 0px;
 }
+
 .titulo {
     padding-left: 30px;
 }
 
-.box1{
+.box1 {
     // width: 90px;
     height: 0px;
 }
 
-h1{
+h1 {
     color: #E8771D;
 }
 
-.boton{
-  padding-bottom: 11px;
+.boton {
+    padding-bottom: 11px;
 }
 
-.labelSideBar{
-  font-size: 25px;
-  color: #5D992C;
+.labelSideBar {
+    font-size: 25px;
+    color: #5D992C;
 }
+
 .box {
     border: 1px solid rgba(0, 0, 0, .0625)!important;
     background: white;
@@ -29,22 +39,26 @@ h1{
     margin: 40px;
     display: flow-root;
 }
-.lineaMenu{
-    background-color: green; height: 2px;
+
+.lineaMenu {
+    background-color: green;
+    height: 2px;
 }
 
-.noSeleccionado{
+.noSeleccionado {
     background-color: transparent!important;
     color: #5D992C;
 }
-.p-button{
+
+.p-button {
     background-color: #5D992C;
     border: #E8771D;
     width: 100%;
     margin-bottom: 11px;
     border-radius: 15px;
 }
-.botonTopBar{
+
+.botonTopBar {
     background-color: #5D992C;
     border: #E8771D;
     width: auto;
@@ -53,8 +67,7 @@ h1{
     height: 45px;
 }
 
-
-.botonNaranja{
+.botonNaranja {
     background-color: #E8771D;
     border: #E8771D;
     width: auto;
@@ -63,7 +76,7 @@ h1{
     height: 45px;
 }
 
-.botonTransparente{
+.botonTransparente {
     background-color: transparent;
     border: transparent;
     color: #E8771D;
@@ -73,7 +86,7 @@ h1{
     height: 45px;
 }
 
-.botonVerde{
+.botonVerde {
     background-color: #5D992C;
     border: #5D992C;
     width: auto;
@@ -81,6 +94,7 @@ h1{
     margin-top: 15px;
     height: 45px;
 }
+
 .p-button:enabled:hover {
     background: #5D992C!important;
     color: #ffffff;
@@ -96,6 +110,7 @@ h1{
 .p-menubar {
     margin-left: auto;
 }
+
 .p-toolbar {
     background: white;
     border: 0px solid #dee2e6;
@@ -103,17 +118,12 @@ h1{
     border-radius: 3px;
     background-color: white;
 }
-.toolbarSuperior{
-    box-shadow: 0 4px 2px -2px rgb(0 0 0 / 0.2);
-}
 
-.p-datatable .p-datatable-thead > tr > th {
+
+.p-datatable .p-datatable-thead>tr>th {
     background: #ffffff;
 }
 
-.p-datatable .p-datatable-tbody > tr > td {
-    text-align: left;
-    border: 1px solid #e9ecef;
-    border-width: 0 0 1px 0;
-    padding: 0.5rem 1rem;
-  }
+.p-progressbar .p-progressbar-value {
+    background-color: $primary-color !important;
+}

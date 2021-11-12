@@ -239,11 +239,11 @@ export class UsuariosComponent implements OnInit {
 
   labelEstado(id: any) {
     let label = '';
-    this.estado.forEach(element => {
-      if (element.value == id.toString()) {
-        label = element.label;
-      }
-    });
+    // this.estado.forEach(element => {
+    //   if (element.value == id.toString()) {
+    //     label = element.label;
+    //   }
+    // });
     return label;
   }
 

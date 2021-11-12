@@ -22,8 +22,11 @@ import {TableModule} from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {ProgressBarModule} from 'primeng/progressbar';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { RouterTestingModule } from '@angular/router/testing';
+import { VehiculosComponent } from './vehiculos/vehiculos.component';
+import { CargandoComponent } from './cargando/cargando.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,8 @@ import { RouterTestingModule } from '@angular/router/testing';
     LoginComponent,
     
     UsuariosComponent,
+          VehiculosComponent,
+          CargandoComponent,
   ],
   imports: [
     AppRoutes,
@@ -52,7 +57,8 @@ import { RouterTestingModule } from '@angular/router/testing';
     ProgressSpinnerModule,
     HttpClientModule,
     BrowserModule,
-    RouterTestingModule, 
+    RouterTestingModule,
+    ProgressBarModule 
   ],
   providers: [AuthGuard, MessageService,ConfirmationService, RouterTestingModule ],
   bootstrap: [AppComponent]
