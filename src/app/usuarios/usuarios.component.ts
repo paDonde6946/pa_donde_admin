@@ -25,10 +25,14 @@ export class UsuariosComponent implements OnInit {
   botonEditar: boolean = false;
   // Utilidades formulario
   tipo = tipoUsuario;
-  estado = estadoUsuario;
+  estado: any = estadoUsuario;
   uid: any;
 
+  // Loader
+  cargando: boolean = true;
+
   formularioUsuario = new FormGroup({
+    cedula: new FormControl('', Validators.compose([Validators.required])),
     correo: new FormControl('', Validators.compose([Validators.required])),
     contrasenia: new FormControl('', Validators.compose([Validators.required])),
     nombre: new FormControl('', Validators.compose([Validators.required])),
@@ -45,11 +49,12 @@ export class UsuariosComponent implements OnInit {
 
     // Columnas definidas para las columnas de la tabla de usuarios
     this.columnas = [
+      { header: 'Cédula', field: 'cedula' },
       { header: 'Nombre', field: 'nombre' },
       { header: 'Apellido', field: 'apellido' },
       { header: 'Teléfono', field: 'celular' },
       { header: 'Estado', field: 'estado' },
-      // { header: 'Tipo Usuario', field: 'tipoUsuario' },
+
     ];
     this.getListadoUsuarios();
   }
@@ -61,6 +66,11 @@ export class UsuariosComponent implements OnInit {
       (res: any) => {
         this.registroLista = res.listaUsuario;
         this.totalRecords = this.registroLista.length;
+        this.registroLista.forEach(element => {
+          element.estado = this.estado[element.estado]
+        })
+
+        this.cargando = false;
       },
       (err: any) => {
         // console.log(err);
@@ -86,25 +96,35 @@ export class UsuariosComponent implements OnInit {
 
   // Boton guardar Usuario
   agregar() {
-    let correo = this.formularioUsuario.value.correo.toString().split("@");
 
-    if (correo[1] != 'unbosque.edu.co') {
-      this.msj.alerta('El correo ingresado no es válido.')
+    if (!this.formularioUsuario.valid) {
+      this.formularioUsuario.markAllAsTouched();
     } else {
-      if (this.formularioUsuario.value.celular != null && this.formularioUsuario.value.celular.toString().length != 10) {
-        this.msj.alerta('El número de teléfono no válido.')
+      let correo = this.formularioUsuario.value.correo.toString().split("@");
+
+      if (correo[1] != 'unbosque.edu.co') {
+        this.msj.alerta('El correo ingresado no es válido.')
       } else {
-        let data = this.formularioUsuario.valid;
-        if (data) {
-          this.confirmationService.confirm({
-            message: '¿Desea guardar este usuario?',
-            accept: () => {
-              this.formularioUsuario.markAllAsTouched();
-              this.putGuardarUsuario();
-            }
-          });
+        if (this.formularioUsuario.value.celular != null && this.formularioUsuario.value.celular.toString().length != 10) {
+          this.msj.alerta('El número de teléfono no válido.')
         } else {
-          this.formularioUsuario.markAllAsTouched();
+          if (this.formularioUsuario.value.cedula != null && this.formularioUsuario.value.cedula.toString().length != 10) {
+            this.msj.alerta('La cédula no es válida.')
+          }
+          else {
+            let data = this.formularioUsuario.valid;
+            if (data) {
+              this.confirmationService.confirm({
+                message: '¿Desea guardar este usuario?',
+                accept: () => {
+                  this.formularioUsuario.markAllAsTouched();
+                  this.putGuardarUsuario();
+                }
+              });
+            } else {
+              this.formularioUsuario.markAllAsTouched();
+            }
+          }
         }
       }
     }
@@ -140,7 +160,8 @@ export class UsuariosComponent implements OnInit {
       contrasenia: this.formularioUsuario.value.contrasenia,
       nombre: this.formularioUsuario.value.nombre,
       apellido: this.formularioUsuario.value.apellido,
-      celular: this.formularioUsuario.value.celular
+      celular: this.formularioUsuario.value.celular,
+      cedula: this.formularioUsuario.value.cedula
     };
 
     this.coreService.putWithOutParam('/login/usuario/registrar', params).subscribe(
@@ -235,16 +256,6 @@ export class UsuariosComponent implements OnInit {
   // Validar campos del formulario de Usuario
   campoNoValido(campo: any) {
     return this.formularioUsuario.get(campo)?.invalid && this.formularioUsuario.get(campo)?.touched;
-  }
-
-  labelEstado(id: any) {
-    let label = '';
-    // this.estado.forEach(element => {
-    //   if (element.value == id.toString()) {
-    //     label = element.label;
-    //   }
-    // });
-    return label;
   }
 
 }

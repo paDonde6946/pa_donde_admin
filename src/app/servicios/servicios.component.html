@@ -2,12 +2,12 @@
     key="tc">
 </p-toast>
 
-<app-cargando [texto]="'Usuarios'" *ngIf="cargando">
+<app-cargando [texto]="'Servicios'" *ngIf="cargando">
 </app-cargando>
 
 <div class="box" *ngIf="!cargando">
-    <div *ngIf="!prepararUsuario">
-        <h1 class="titulo">Usuarios</h1>
+    <div *ngIf="!prepararServicio">
+        <h1 class="titulo">Servicios</h1>
         <p-toolbar>
             <div class="p-toolbar-group-left">
                 <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja position-static"
@@ -31,14 +31,12 @@
                 <tr>
                     <td *ngFor="let col of columns">
                         <span class="p-column-title">{{col.header}}</span>
-
-
                         {{ rowData[col.field] ? rowData[col.field] :
                         'No disponible' }}
                     </td>
                     <td>
                         <button pButton label="Editar" class="botonNaranja" icon="pi pi-pencil" pTooltip="Editar"
-                            (click)="editarUsuario(rowData)">
+                            (click)="editarServicio(rowData)">
                         </button>
                         <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit"
                             pTooltip="Cambiar Estado" (click)="actualizarEstado(rowData)">
@@ -49,9 +47,9 @@
             </ng-template>
         </p-table>
     </div>
-    <div *ngIf="prepararUsuario">
-        <h1 class="titulo" *ngIf="botonGuardar">Agregar Usuario</h1>
-        <h1 class="titulo" *ngIf="botonEditar">Editar Usuario</h1>
+    <div *ngIf="prepararServicio">
+        <h1 class="titulo" *ngIf="botonGuardar">Agregar Servicio</h1>
+        <h1 class="titulo" *ngIf="botonEditar">Editar Servicio</h1>
         <p-toolbar>
             <div class="p-toolbar-group-left">
                 <button pButton icon="pi pi-arrow-left" label="Volver" class="botonVerde" (click)="volver()"></button>
@@ -60,37 +58,27 @@
             </div>
         </p-toolbar>
 
-        <form [formGroup]="formularioUsuario" class="posicion-form">
+        <form [formGroup]="formularioServicio" class="posicion-form">
             <div class="p-fluid p-formgrid grid">
-                <div class="col-12 md:col-6 grid">
-                    <div class="col-1 md:col-1 lg:col-1"></div>
-                    <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="cedula">Cédula:<span style="color: #a94442;">*</span></label>
-                        <input id="cedula" type="number" pInputText placeholder="Cédula" formControlName="cedula">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('cedula')">Campo
-                            Obligatorio</small>
-                    </div>
-                    <div class="col-12 md:col-1"></div>
-                </div>
-
                 <div class="col-12 md:col-6 lg:col-6 grid">
                     <div class="col-1 md:col-1 lg:col-1"></div>
                     <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="correo">Correo:<span style="color: #a94442;">*</span></label>
-                        <input id="correo" type="text" pInputText placeholder="Correo" formControlName="correo">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('correo')">Campo
+                        <label for="puntoInicio">Punto Inicio:<span style="color: #a94442;">*</span></label>
+                        <input id="puntoInicio" type="text" pInputText placeholder="Punto Inicio"
+                            formControlName="puntoInicio">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('puntoInicio')">Campo
                             Obligatorio</small>
                     </div>
                     <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-6 grid" *ngIf="!botonEditar">
+                <div class="col-12 md:col-6 grid">
                     <div class="col-1 md:col-1 lg:col-1"></div>
                     <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="contrasenia">Contraseña:<span style="color: #a94442;">*</span></label>
-                        <input id="contrasenia" type="text" pInputText placeholder="Contraseña"
-                            formControlName="contrasenia">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('contrasenia')">Campo
+                        <label for="puntoFinal">Punto Final:<span style="color: #a94442;">*</span></label>
+                        <input id="puntoFinal" type="text" pInputText placeholder="Punto Final"
+                            formControlName="puntoFinal">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('puntoFinal')">Campo
                             Obligatorio</small>
                     </div>
                     <div class="col-12 md:col-1"></div>
@@ -100,9 +88,10 @@
                 <div class="col-12 md:col-6 grid">
                     <div class="col-1 md:col-1 lg:col-1"></div>
                     <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="nombre">Nombre:<span style="color: #a94442;">*</span></label>
-                        <input id="nombre" type="text" pInputText placeholder="Nombre" formControlName="nombre">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('nombre')">Campo
+                        <label for="cuposTotales">Cupos Totales:<span style="color: #a94442;">*</span></label>
+                        <input id="cuposTotales" type="number" pInputText placeholder="Cupos Totales"
+                            formControlName="cuposTotales">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('cuposTotales')">Campo
                             Obligatorio</small>
                     </div>
                     <div class="col-12 md:col-1"></div>
@@ -111,9 +100,10 @@
                 <div class="col-12 md:col-6 grid">
                     <div class="col-1 md:col-1 lg:col-1"></div>
                     <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="apellido">Apellido:<span style="color: #a94442;">*</span></label>
-                        <input id="apellido" type="text" pInputText placeholder="Apellido" formControlName="apellido">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('apellido')">Campo
+                        <label for="placa">Placa de Vehículo<span style="color: #a94442;">*</span></label>
+                        <input id="placa" type="text" pInputText placeholder="Placa de Vehículo"
+                            formControlName="placa">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('placa')">Campo
                             Obligatorio</small>
                     </div>
                     <div class="col-12 md:col-1"></div>
@@ -122,10 +112,21 @@
                 <div class="col-12 md:col-6 grid">
                     <div class="col-1 md:col-1 lg:col-1"></div>
                     <div class="p-field col-10 md:col-10 lg:col-10">
-                        <label for="telefono">Teléfono:<span style="color: #a94442;">*</span></label>
-                        <input id="telefono" type="number" pInputText placeholder="Teléfono" formControlName="celular">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('celular')">Campo
+                        <label for="fecha">Fecha:<span style="color: #a94442;">*</span></label>
+                        <p-calendar [showTime]="true" inputId="time" formControlName="fecha" placeholder="Fecha">
+                        </p-calendar>
+                        <small style="color: #a94442;" *ngIf="campoNoValido('fecha')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div>
+
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
+                        <label for="descripcion">Descripcion:</label>
+                        <textarea pInputTextarea id="descripcion" placeholder="Descripcion"
+                            formControlName="descripcion"></textarea>
                     </div>
                     <div class="col-12 md:col-1"></div>
                 </div>

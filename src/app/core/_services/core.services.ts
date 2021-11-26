@@ -11,7 +11,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'x-token': token
+    'x-token': token == null? '':token
   })
 };
 

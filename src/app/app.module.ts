@@ -27,6 +27,9 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { CargandoComponent } from './cargando/cargando.component';
+import { ServiciosComponent } from './servicios/servicios.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { CargandoComponent } from './cargando/cargando.component';
     UsuariosComponent,
           VehiculosComponent,
           CargandoComponent,
+          ServiciosComponent,
   ],
   imports: [
     AppRoutes,
@@ -58,7 +62,9 @@ import { CargandoComponent } from './cargando/cargando.component';
     HttpClientModule,
     BrowserModule,
     RouterTestingModule,
-    ProgressBarModule 
+    ProgressBarModule,
+    InputTextareaModule,
+    CalendarModule
   ],
   providers: [AuthGuard, MessageService,ConfirmationService, RouterTestingModule ],
   bootstrap: [AppComponent]

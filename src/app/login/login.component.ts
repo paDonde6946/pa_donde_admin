@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
             this.cambiarContrasenia = true;
             this.uid = res.usuario.uid;
             this.token = res.token
+            // sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
             console.log(res);
             console.log(this.token);
           } else {
@@ -112,18 +113,20 @@ export class LoginComponent implements OnInit {
       uid: this.uid,
       contrasenia: this.formularioNuevaContrasenia.value.contrasenia1
     }
-    console.log(params);
     this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
 
       (res: any) => {
-        // sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
-        // sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
+        console.log(this.token);
+        sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
+        console.log(sessionStorage.getItem(CONSTANTES_SESION.TOKEN));
         console.log(res);
         // this.router.navigate(['/usuarios']);
         this.cambiarContrasenia = false;
         this.recuperar = false;
         this.loginAdmin = true;
         this.msj.info('Contraseña actualizada exitosamente');
+        sessionStorage.clear();
+        this.formularioLogin.reset();
       },
       (err: any) => {
         console.log(err);

@@ -52,21 +52,21 @@ export class AppComponent implements OnInit {
         title: '/usuarios'
       },
       {
-        label: 'Vehiculos',
+        label: 'Vehículos',
         icon: 'pi-star-o',
         style: { 'noSeleccionado': true },
         id: '2',
         title: '/vehiculos'
       },
       {
-        label: 'Parametros',
-        icon: 'pi pi-cog',
+        label: 'Servicios',
+        icon: 'pi pi-flag',
         style: { 'noSeleccionado': true },
         id: '3',
-        title: '/usuarios'
+        title: '/servicios'
       },
       {
-        label: 'Estadisticas',
+        label: 'Estadísticas',
         icon: 'pi pi-chart-bar',
         style: { 'noSeleccionado': true },
         id: '4',
