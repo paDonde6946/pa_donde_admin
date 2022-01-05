@@ -88,9 +88,9 @@ export class LoginComponent implements OnInit {
             this.cambiarContrasenia = true;
             this.uid = res.usuario.uid;
             this.token = res.token
-            // sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
-            console.log(res);
             console.log(this.token);
+            sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+
           } else {
             this.loginAdmin = false;
             this.recuperar = false;
@@ -111,28 +111,30 @@ export class LoginComponent implements OnInit {
 
     let params = {
       uid: this.uid,
-      contrasenia: this.formularioNuevaContrasenia.value.contrasenia1
+      contrasenia: this.formularioNuevaContrasenia.value.contrasenia1,
+      token: this.token
     }
-    this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
+    
+    if (this.formularioNuevaContrasenia.value.contrasenia1 != this.formularioNuevaContrasenia.value.contrasenia2) {
+      this.msj.alerta('La contraseña no coincide');
+    } else {
+      console.log(sessionStorage.getItem(CONSTANTES_SESION.TOKEN));
+      console.log(sessionStorage.getItem(CONSTANTES_SESION.CORREO));
+      this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
 
-      (res: any) => {
-        console.log(this.token);
-        sessionStorage.setItem(CONSTANTES_SESION.TOKEN, this.token);
-        console.log(sessionStorage.getItem(CONSTANTES_SESION.TOKEN));
-        console.log(res);
-        // this.router.navigate(['/usuarios']);
-        this.cambiarContrasenia = false;
-        this.recuperar = false;
-        this.loginAdmin = true;
-        this.msj.info('Contraseña actualizada exitosamente');
-        sessionStorage.clear();
-        this.formularioLogin.reset();
-      },
-      (err: any) => {
-        console.log(err);
-        // this.msj.error('Credenciales Incorrectas.');
-      }
-    )
+        (res: any) => {
+          sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+          this.cambiarContrasenia = false;
+          this.recuperar = false;
+          this.loginAdmin = true;
+          this.msj.info('Contraseña actualizada exitosamente');
+          this.formularioLogin.reset();
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      )
+    }
   }
 
   logout() {

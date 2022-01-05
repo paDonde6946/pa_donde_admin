@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   validarSesion() {
-    let sesion = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
+    let sesion = sessionStorage.getItem(CONSTANTES_SESION.CORREO);
 
     if (sesion == null || sesion == '' || sesion == undefined) {
       return false
