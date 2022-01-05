@@ -136,6 +136,7 @@ export class UsuariosComponent implements OnInit {
     this.prepararUsuario = true;
     this.botonGuardar = false;
     this.botonEditar = true;
+    this.formularioUsuario.controls['cedula'].setValue(data.cedula);
     this.formularioUsuario.controls['correo'].setValue(data.correo);
     this.formularioUsuario.controls['nombre'].setValue(data.nombre);
     this.formularioUsuario.controls['apellido'].setValue(data.apellido);

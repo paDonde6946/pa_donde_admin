@@ -5,34 +5,50 @@ import { throwError } from 'rxjs';
 import { AppConfig } from '../../app.config';
 import { CONSTANTES_SESION } from '../_util/services-util';
 
-const token: any = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
+let token: any = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'x-token': token == null? '':token
-  })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CoreService {
+  
+  getToken() : string {
+    console.log("Entro");
+    
+    if(sessionStorage.getItem(CONSTANTES_SESION.TOKEN) != null){
+      let tokenSesion: string = sessionStorage.getItem(CONSTANTES_SESION.TOKEN)!;
+      return tokenSesion ;
+    }else{
+      return '';
+    }
+  }
+  
+  httpOptions() :{} {
 
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-token': this.getToken() 
+      })
+    }
+    return httpOptions;
+  };
+  
   protected baseUrl: string = '/web';
 
   constructor(private http: HttpClient) { }
 
   get(endpoint: string) {
-    return this.http.get(this.baseUrl + endpoint, httpOptions).pipe(
+    return this.http.get(this.baseUrl + endpoint, this.httpOptions()).pipe(
       catchError(this.handleError)
     );
   }
 
   post(endpoint: string, element: any) {
-    return this.http.post(this.baseUrl + endpoint, element, httpOptions).pipe(
+    return this.http.post(this.baseUrl + endpoint, element, this.httpOptions()).pipe(
       catchError(this.handleError)
     );
   }
@@ -64,19 +80,19 @@ export class CoreService {
   }
 
   putWithOutParam(endpoint: string, element: any) {
-    return this.http.put(this.baseUrl + endpoint, element, httpOptions).pipe(
+    return this.http.put(this.baseUrl + endpoint, element, this.httpOptions()).pipe(
       catchError(this.handleError)
     );
   }
 
   put(endpoint: string, element: any) {
-    return this.http.put(this.baseUrl + endpoint + '/' + element.id, element, httpOptions).pipe(
+    return this.http.put(this.baseUrl + endpoint + '/' + element.id, element, this.httpOptions()).pipe(
       catchError(this.handleError)
     );
   }
 
   delete(endpoint: string, id: any) {
-    return this.http.delete(this.baseUrl + endpoint + '/' + id, httpOptions).pipe(
+    return this.http.delete(this.baseUrl + endpoint + '/' + id, this.httpOptions()).pipe(
       catchError(this.handleError)
     );
   }
