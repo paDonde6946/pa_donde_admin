@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
             this.loginAdmin = false;
             this.recuperar = false;
             this.cambiarContrasenia = false;
-            sessionStorage.setItem(CONSTANTES_SESION.CORREO, formularioLogin.correo);
+            sessionStorage.setItem(CONSTANTES_SESION.CORREO, params.correo);
             sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
             this.router.navigate(['/usuarios']);
           }
