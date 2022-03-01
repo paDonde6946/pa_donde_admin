@@ -30,6 +30,7 @@ import { CargandoComponent } from './cargando/cargando.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CalendarModule } from 'primeng/calendar';
           VehiculosComponent,
           CargandoComponent,
           ServiciosComponent,
+          EstadisticasComponent,
   ],
   imports: [
     AppRoutes,

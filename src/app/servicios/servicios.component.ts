@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
@@ -18,10 +19,7 @@ export class ServiciosComponent implements OnInit {
   registroLista: any[] = [];
   totalRecords = 0;
 
-  // Estados
-  prepararServicio: boolean = false;
-  botonGuardar: boolean = false;
-  botonEditar: boolean = false;
+
   existe: boolean = false;
   // Utilidades
   uid: any;
@@ -30,15 +28,6 @@ export class ServiciosComponent implements OnInit {
 
   // Loader
   cargando: boolean = true;
-
-  formularioServicio = new FormGroup({
-    puntoInicio: new FormControl('', Validators.compose([Validators.required])),
-    puntoFinal: new FormControl('', Validators.compose([Validators.required])),
-    cuposTotales: new FormControl('', Validators.compose([Validators.required])),
-    placa: new FormControl('', Validators.compose([Validators.required])),
-    fecha: new FormControl('', Validators.compose([Validators.required])),
-    descripcion: new FormControl(''),
-  });
   constructor(
     public coreService: CoreService,
     public msj: AlertasService,
@@ -58,7 +47,6 @@ export class ServiciosComponent implements OnInit {
     this.getListadoServicios();
   }
 
-
   // Metodo para obtener el listado de usuarios
   getListadoServicios() {
 
@@ -77,73 +65,6 @@ export class ServiciosComponent implements OnInit {
     )
   }
 
-  // Metodo para boton Agregar Servicio
-  prepararNuevo() {
-
-    this.prepararServicio = true;
-    this.botonGuardar = true;
-    this.botonEditar = false;
-    this.formularioServicio.reset();
-  }
-
-  // Metodo para boton Volver
-  volver() {
-    this.prepararServicio = false;
-    this.botonGuardar = false;
-    this.botonEditar = false;
-  }
-
-  // Boton guardar Servicio
-  agregar() {
-
-    if (this.formularioServicio.value.cuposTotales > 4 || 0 >= this.formularioServicio.value.cuposTotales) {
-      this.msj.alerta('Los número de cupos totales ingresado no es válido.');
-    }
-    else if (this.formularioServicio.value.placa.length != 6) {
-      this.msj.alerta('La placa ingresada no es válida.');
-    }
-    else {
-      this.coreService.get('/vehiculos/buscarVehiculo/' + this.formularioServicio.value.placa).subscribe(
-        (res: any) => {
-
-          if (res != null || res != undefined || res != '') {
-
-            this.uid = res.vehiculo.uid;
-
-            let data = this.formularioServicio.valid;
-            if (data) {
-              this.confirmationService.confirm({
-                message: '¿Desea guardar este servicio?',
-                accept: () => {
-                  this.formularioServicio.markAllAsTouched();
-                  this.postGuardarServicio();
-                }
-              });
-            } else {
-              this.formularioServicio.markAllAsTouched();
-            }
-          }
-        },
-        (err: any) => {
-          console.log(err);
-          this.msj.alerta('La placa ingresada no se encuentra registrada.')
-        }
-      )
-    }
-  }
-  // Boton editar Servicio
-  editarServicio(data: any) {
-
-    this.uid = data.uid;
-    this.prepararServicio = true;
-    this.botonGuardar = false;
-    this.botonEditar = true;
-    // this.formularioServicio.controls['correo'].setValue(data.correo);
-    // this.formularioServicio.controls['nombre'].setValue(data.nombre);
-    // this.formularioServicio.controls['apellido'].setValue(data.apellido);
-    // this.formularioServicio.controls['celular'].setValue(data.celular);
-  }
-
   // Metodo para cargador valores de lista al editar
   cargarDatosEditar(iLista: any, valor: any) {
     if (iLista !== undefined && iLista != null) {
@@ -155,85 +76,16 @@ export class ServiciosComponent implements OnInit {
     }
   }
 
-  // Put para guardar servicio
-  postGuardarServicio() {
-
-
-    let params = {
-      puntoInicio: this.formularioServicio.value.puntoInicio,
-      puntoFinal: this.formularioServicio.value.puntoFinal,
-      cuposTotales: this.formularioServicio.value.cuposTotales,
-      vehiculo: this.uid,
-      fecha: this.formularioServicio.value.fecha.toISOString(),
-      descripcion: this.formularioServicio.value.descripcion
-    };
-    console.log(params);
-    this.coreService.post('/servicio/agregarServicio', params).subscribe(
-      (res: any) => {
-        this.msj.info('Servicio Guardado Correctamente');
-        this.getListadoServicios();
-        this.prepararServicio = false;
-      },
-      (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
-      }
-    )
-  }
-  // Metodo de boton editar servicio 
-  actualizar() {
-    let data = this.formularioServicio.valid;
-    this.confirmationService.confirm({
-      message: '¿Desea actualizar este servicio?',
-      accept: () => {
-        this.formularioServicio.markAllAsTouched();
-        this.postActualizarServicio();
-      }
-    });
-
-  }
-
-  // Metodo para actualizar un usuario
-  postActualizarServicio() {
-
-    let params = {
-      // uid: this.uid,
-      // correo: this.formularioServicio.value.correo,
-      // nombre: this.formularioServicio.value.nombre,
-      // apellido: this.formularioServicio.value.apellido,
-      // celular: this.formularioServicio.value.celular
-    }
-    // console.log(params);
-    this.coreService.post('', params).subscribe(
-      (res: any) => {
-        this.msj.info("Servicio actualizado exitosamente");
-        this.getListadoServicios();
-        this.prepararServicio = false;
-      },
-
-      (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
-      }
-    )
-  }
-
   actualizarEstado(data: any) {
     let params = {
-      // uid: data.uid
+      uid: data.uid
     }
-    this.coreService.post('', params).subscribe(
+    console.log(params.uid);
+    this.coreService.put('/servicio/cambiarEstado', params).subscribe(
       (res: any) => {
 
         this.msj.info("Estado actualizado exitosamente");
         this.getListadoServicios();
-        this.prepararServicio = false;
       },
 
       (err: any) => {
@@ -245,9 +97,4 @@ export class ServiciosComponent implements OnInit {
       }
     )
   }
-  // Validar campos del formulario de Usuario
-  campoNoValido(campo: any) {
-    return this.formularioServicio.get(campo)?.invalid && this.formularioServicio.get(campo)?.touched;
-  }
-
 }

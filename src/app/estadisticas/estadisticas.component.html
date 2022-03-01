@@ -1,0 +1,35 @@
+<app-cargando [texto]="'Estadísticas'" *ngIf="cargando">
+</app-cargando>
+
+
+<div *ngIf="!cargando">
+    <div class="box">
+        <h1 class="titulo">Estadísticas Generales</h1>
+        <div class="grid">
+            <div class="boxEstadistica col-2 md:col-2 lg:col-2">
+                <h2 class="tituloEstadistica">{{totalUsuarios}}</h2>
+                <h2 class="tituloEstadistica">Total Usuarios</h2>
+            </div>
+            <div class="boxEstadistica2 col-2 md:col-2 lg:col-2">
+                <h2 class="tituloEstadistica">{{totalVehiculos}}</h2>
+                <h2 class="tituloEstadistica">Total Vehículos</h2>
+            </div>
+            <div class="boxEstadistica3 col-2 md:col-2 lg:col-2">
+                <h2 class="tituloEstadistica">{{totalConductores}}</h2>
+                <h2 class="tituloEstadistica">Total Conductores</h2>
+            </div>
+            <div class="boxEstadistica4 col-2 md:col-2 lg:col-2">
+                <h2 class="tituloEstadistica">10</h2>
+                <h2 class="tituloEstadistica">Total Viajes</h2>
+            </div>
+        </div>
+        <br><br>
+    </div>
+    <div class="box">
+        <h1 class="titulo">Estadística ...</h1>
+        <div class="grid">
+
+        </div>
+        <br><br>
+    </div>
+</div>

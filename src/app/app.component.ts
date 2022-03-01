@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
         icon: 'pi pi-chart-bar',
         style: { 'noSeleccionado': true },
         id: '4',
-        title: '/usuarios'
+        title: '/estadisticas'
       },
     ];
   }

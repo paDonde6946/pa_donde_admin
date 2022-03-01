@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 export const routes: Routes = [
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard]},
     {path: 'vehiculos', component: VehiculosComponent, canActivate: [AuthGuard]},
     {path: 'servicios', component: ServiciosComponent, canActivate: [AuthGuard]},
+    {path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard]},
 
     
 
