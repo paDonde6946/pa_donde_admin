@@ -60,9 +60,9 @@ export class UsuariosComponent implements OnInit {
   }
 
   // Metodo para obtener el listado de usuarios
-  getListadoUsuarios() {
+  async getListadoUsuarios() {
 
-    this.coreService.get('/usuario/listaUsuarios').subscribe(
+    await this.coreService.get('/usuario/listaUsuarios').subscribe(
       (res: any) => {
         this.registroLista = res.listaUsuario;
         this.totalRecords = this.registroLista.length;
@@ -73,7 +73,7 @@ export class UsuariosComponent implements OnInit {
         this.cargando = false;
       },
       (err: any) => {
-        // console.log(err);
+        console.log(err);
       }
     )
   }
@@ -239,7 +239,6 @@ export class UsuariosComponent implements OnInit {
     }
     this.coreService.post('/usuario/cambiarEstadoUsuario', params).subscribe(
       (res: any) => {
-        console.log(res);
         this.msj.info("Estado actualizado exitosamente");
         this.getListadoUsuarios();
         this.prepararUsuario = false;

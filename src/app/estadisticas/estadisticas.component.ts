@@ -23,11 +23,10 @@ export class EstadisticasComponent implements OnInit {
     this.getTotalVehiculos();
     this.getTotalConductores();
   }
-  getTotalConductores() {
-    this.coreService.get('/dashboard/estadisticas/cantidadConductores').subscribe(
+  async getTotalConductores() {
+    await this.coreService.get('/dashboard/estadisticas/cantidadConductores').subscribe(
       (res: any) => {
           this.totalConductores = res.value
-          console.log(this.totalConductores);
           this.cargando = false;
       },
       (err: any) => {
@@ -35,11 +34,10 @@ export class EstadisticasComponent implements OnInit {
       }
     );
   }
-  getTotalVehiculos() {
-    this.coreService.get('/dashboard/estadisticas/cantidadVehiculos').subscribe(
+  async getTotalVehiculos() {
+    await this.coreService.get('/dashboard/estadisticas/cantidadVehiculos').subscribe(
       (res: any) => {
           this.totalVehiculos = res.value
-          console.log(this.totalVehiculos);
           this.cargando = false;
       },
       (err: any) => {
@@ -47,11 +45,10 @@ export class EstadisticasComponent implements OnInit {
       }
     );
   }
-  getTotalUsuarios() {
-    this.coreService.get('/dashboard/estadisticas/cantidadUsuarios').subscribe(
+  async getTotalUsuarios() {
+    await this.coreService.get('/dashboard/estadisticas/cantidadUsuarios').subscribe(
       (res: any) => {
           this.totalUsuarios = res.value
-          console.log(this.totalUsuarios);
           this.cargando = false;
       },
       (err: any) => {

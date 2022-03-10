@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { AlertasService } from '../core/_services/alerta.service';
 import { CoreService } from '../core/_services/core.services';
-import { estadoUsuario } from '../core/_util/usuario-util';
+import { estadoServicio } from '../core/_util/usuario-util';
 
 @Component({
   selector: 'app-servicios',
@@ -23,7 +23,7 @@ export class ServiciosComponent implements OnInit {
   existe: boolean = false;
   // Utilidades
   uid: any;
-  estado: any = estadoUsuario;
+  estado: any = estadoServicio;
   // fecha = new Date;
 
   // Loader
@@ -37,10 +37,10 @@ export class ServiciosComponent implements OnInit {
   ngOnInit(): void {
     // Columnas definidas para la de la tabla de servicios
     this.columnas = [
-      { header: 'Punto Inicio', field: 'puntoInicio' },
-      { header: 'Punto Final', field: 'puntoFinal' },
-      { header: 'Cupos Totales', field: 'cuposTotales' },
-      { header: 'Fecha', field: 'fecha' },
+      { header: 'Punto Inicio', field: 'nombreOrigen' },
+      { header: 'Punto Final', field: 'nombreDestino' },
+      { header: 'Cupos Totales', field: 'cantidadCupos' },
+      { header: 'Fecha', field: 'fechayhora' },
       { header: 'Estado', field: 'estado' },
     ];
 
@@ -48,9 +48,9 @@ export class ServiciosComponent implements OnInit {
   }
 
   // Metodo para obtener el listado de usuarios
-  getListadoServicios() {
+  async getListadoServicios() {
 
-    this.coreService.get('/servicio/listarServicio').subscribe(
+    await this.coreService.get('/servicio/listarServicio').subscribe(
       (res: any) => {
         this.registroLista = res.listaServicio;
         this.totalRecords = this.registroLista.length;

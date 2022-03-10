@@ -88,7 +88,6 @@ export class LoginComponent implements OnInit {
             this.cambiarContrasenia = true;
             this.uid = res.usuario.uid;
             this.token = res.token
-            console.log(this.token);
             sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
 
           } else {
@@ -190,7 +189,6 @@ export class LoginComponent implements OnInit {
 
   enterCambiarContrasenia(event: any) {
     if (event.key === 'Enter') {
-      // this.login();
     }
   }
 

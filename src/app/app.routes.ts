@@ -17,8 +17,6 @@ export const routes: Routes = [
     {path: 'servicios', component: ServiciosComponent, canActivate: [AuthGuard]},
     {path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuard]},
 
-    
-
 ];
 
 export const AppRoutes: ModuleWithProviders<any> = RouterModule.forRoot(

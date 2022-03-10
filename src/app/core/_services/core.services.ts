@@ -15,8 +15,7 @@ let token: any = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
 export class CoreService {
   
   getToken() : string {
-    console.log("Entro");
-    
+  
     if(sessionStorage.getItem(CONSTANTES_SESION.TOKEN) != null){
       let tokenSesion: string = sessionStorage.getItem(CONSTANTES_SESION.TOKEN)!;
       return tokenSesion ;

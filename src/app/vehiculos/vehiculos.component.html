@@ -1,53 +1,54 @@
-<p-toast position="top-center" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [baseZIndex]="5000" key="tc">
+<p-toast position="top-center" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [baseZIndex]="5000"
+    key="tc">
 </p-toast>
 
 <app-cargando [texto]="'Vehiculos'" *ngIf="cargando">
 </app-cargando>
 
-<div class="box"  *ngIf="!cargando">
-
+<div class="box" *ngIf="!cargando">
     <div *ngIf="!prepararVehiculo">
         <h1 class="titulo mb-0">Vehiculo</h1>
         <p-toolbar>
             <div class="p-toolbar-group-left">
                 <button pButton icon="pi pi-plus" label="Agregar" class="botonNaranja position-static"
-                (click)="agregarVehiculo()"></button>
+                    (click)="agregarVehiculo()"></button>
             </div>
             <div class="p-toolbar-group-right">
             </div>
         </p-toolbar>
         <p-table [columns]="columnas" [value]="listaVehiculos" [paginator]="true" [rows]="5"
-        [showCurrentPageReport]="true" responsiveLayout="stack"
-        currentPageReportTemplate="Total Registros: {{this.listaVehiculos.length}}" class="pr-2">
-        <ng-template pTemplate="header" let-columns >
-            <tr>
-                <th *ngFor="let col of columns">
-                    <b>{{col.header}}</b>
-                </th>
-                <th style="width: 270px; text-align:center"><b>Acciones</b></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    <span class="p-column-title">{{col.header}}</span>
-                    {{rowData[col.field]}}
-                </td>
-                <td>
-                    <button pButton label="Editar" class="botonNaranja" icon="pi pi-pencil" pTooltip="Editar"
-                    (click)="editarVehiculo(rowData)"    >
-                    </button>
-                    <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit" pTooltip="Cambiar Estado"
-                    (click)="setEstado(rowData['uid'])" >
-                    </button> 
-                </td>
-            </tr>
-        </ng-template>
+            [showCurrentPageReport]="true" responsiveLayout="stack"
+            currentPageReportTemplate="Total Registros: {{this.listaVehiculos.length}}" class="pr-2">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        <b>{{col.header}}</b>
+                    </th>
+                    <th style="width: 270px; text-align:center"><b>Acciones</b></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        <span class="p-column-title">{{col.header}}</span>
+                        {{rowData[col.field]}}
+                    </td>
+                    <td>
+                        <button pButton label="Editar" class="botonNaranja" icon="pi pi-pencil" pTooltip="Editar"
+                            (click)="editarVehiculo(rowData)">
+                        </button>
+                        <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit"
+                            pTooltip="Cambiar Estado" (click)="setEstado(rowData['uid'])">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
         </p-table>
     </div>
 
     <div *ngIf="prepararVehiculo">
-        <h1 class="titulo mb-0">Agregar un Vehiculo</h1>
+        <h1 class="titulo mb-0" *ngIf="botonGuardar">Agregar un Vehiculo</h1>
+        <h1 class="titulo mb-0" *ngIf="botonEditar">Editar un Vehiculo</h1>
         <p-toolbar>
             <div class="p-toolbar-group-left">
                 <button pButton icon="pi pi-arrow-left" label="Volver" class="botonVerde" (click)="volver()"></button>
@@ -55,48 +56,88 @@
             <div class="p-toolbar-group-right">
             </div>
         </p-toolbar>
-        <form [formGroup]="formularioVehiculo" class="posicion-form px-5">
+
+        <form [formGroup]="formularioVehiculo" class="posicion-form">
             <div class="p-fluid p-formgrid grid ">
-                <div class="col-12 md:col-2 lg:col-2 px-3 py-3">
+                <!-- <div class="col-12 md:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="col-10 md:col-10 lg:col-10">
+                        <label for="cedula">Cédula Propietario:<span style="color: #a94442;">*</span></label>
+                        <input id="placa" type="text" pInputText placeholder="Cédula Propietario"
+                            formControlName="cedula">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('cedula')">Campo
+                            Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
+                </div> -->
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="col-10 md:col-10 lg:col-10">
                         <label for="placa">Placa:<span style="color: #a94442;">*</span></label>
-                        <input id="placa" type="text" pInputText placeholder="Placa" formControlName="placa">
+                        <input id="placa" type="text" pInputText placeholder="Placa" formControlName="placa"
+                            maxlength="6">
                         <small style="color: #a94442;" *ngIf="campoNoValido('placa')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 px-3 py-3">
-                        <label for="tipoVehiculo">Tipo Vehiculo:<span style="color: #a94442;">*</span></label>
-                        <p-dropdown [options]="tipoVehiculoDropdown" formControlName="tipoVehiculo" placeholder="Select a City"  optionValue="value" optionLabel="name" [showClear]="true"></p-dropdown>
+                <div class="col-12 md:col-6 lg:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="col-10 md:col-10 lg:col-10">
+                        <label for="tipoVehiculo">Tipo Vehículo:<span style="color: #a94442;">*</span></label>
+                        <p-dropdown [options]="tipoVehiculoDropdown" formControlName="tipoVehiculo"
+                            placeholder="Tipo de Vehículo" optionValue="value" optionLabel="name" [showClear]="true">
+                        </p-dropdown>
                         <small style="color: #a94442;" *ngIf="campoNoValido('tipoVehiculo')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 px-3 py-3">
-                        <label for="color">Color:<span style="color: #a94442;">*</span></label>
-                        <input id="color" type="text" pInputText placeholder="Color" formControlName="color">
-                        <small style="color: #a94442;" *ngIf="campoNoValido('color')">Campo 
+                <div class="col-12 md:col-6 lg:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="col-10 md:col-10 lg:col-10">
+                        <label for="color">Color Vehículo:<span style="color: #a94442;">*</span></label>
+                        <input id="color" type="text" pInputText placeholder="Color Vehículo" formControlName="color">
+                        <small style="color: #a94442;" *ngIf="campoNoValido('color')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 px-3 py-3">
-                        <label for="color">Marca:<span style="color: #a94442;">*</span></label>
-                        <input id="marca" type="text" pInputText placeholder="marca" formControlName="marca">
+                <div class="col-12 md:col-6 lg:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
+                        <label for="color">Marca Vehículo:<span style="color: #a94442;">*</span></label>
+                        <input id="marca" type="text" pInputText placeholder="Marca Vehículo" formControlName="marca">
                         <small style="color: #a94442;" *ngIf="campoNoValido('marca')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-2 lg:col-2 px-3 py-3">
-                        <label for="color">Año:<span style="color: #a94442;">*</span></label>
-                        <input id="anio" type="text" pInputText placeholder="anio" formControlName="anio">
+                <div class="col-12 md:col-6 lg:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
+                        <label for="color">Año Vehículo:<span style="color: #a94442;">*</span></label>
+                        <input id="anio" type="number" pInputText placeholder="Año Vehículo" formControlName="anio">
                         <small style="color: #a94442;" *ngIf="campoNoValido('anio')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 px-3 py-3">
-                        <label for="color">Modelo:<span style="color: #a94442;">*</span></label>
-                        <input id="modelo" type="text" pInputText placeholder="modelo" formControlName="modelo">
+                <div class="col-12 md:col-6 grid">
+                    <div class="col-1 md:col-1 lg:col-1"></div>
+                    <div class="p-field col-10 md:col-10 lg:col-10">
+                        <label for="color">Modelo Vehículo:<span style="color: #a94442;">*</span></label>
+                        <input id="modelo" type="text" pInputText placeholder="Modelo Vehículo"
+                            formControlName="modelo">
                         <small style="color: #a94442;" *ngIf="campoNoValido('modelo')">Campo
                             Obligatorio</small>
+                    </div>
+                    <div class="col-12 md:col-1"></div>
                 </div>
             </div>
 
@@ -104,7 +145,7 @@
                 <p-toolbar>
                     <div class="ui-toolbar-group-left">
                         <button *ngIf="botonGuardar" pButton label="Guardar" class="botonNaranja" icon="pi pi-save"
-                            pTooltip="Guardar" (click)="guardarVehiculo()">
+                            pTooltip="Guardar" (click)="agregar()">
                         </button>
                         <button *ngIf="botonEditar" pButton label="Editar" class="botonNaranja" icon="pi pi-save"
                             pTooltip="Editar" (click)="actualizar()">
