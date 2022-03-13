@@ -5,5 +5,7 @@ export const CONSTANTES = {
   export const CONSTANTES_SESION = {
     TOKEN: 'accessToken',
     CORREO: 'correo',
+    ID: 'uid',
+    MENU: 'menu'
   }
   

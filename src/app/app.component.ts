@@ -1,47 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CONSTANTES_SESION } from './core/_util/services-util';
 import { HttpClient } from '@angular/common/http';
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { delay } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [LoginComponent, MessageService,  HttpClient]
+  providers: [LoginComponent, MessageService, HttpClient]
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+
   title: string = 'PaDondeAdmin';
   display: any;
   logueado: any;
+  menu: boolean = false;
+  mostrar: boolean = false;
   items: MenuItem[] = [];
   itemsSide: MenuItem[] = [];
-  mostrarMenu : any = false;
+  mostrarMenu: any = false;
   constructor(
+    private observer: BreakpointObserver,
     protected router: Router,
   ) {
   }
+
+  ngAfterViewInit() {
+
+    this.observer
+      .observe(['(max-width: 800px)'])
+      .pipe(delay(1))
+      .subscribe((res) => {
+        if (res.matches) {
+          this.sidenav.mode = 'over';
+          this.sidenav.close();
+          this.menu = false;
+        } else {
+          this.sidenav.mode = 'side';
+          this.sidenav.open();
+          this.menu = true;
+        }
+      });
+  }
+
   ngOnInit(): void {
+
     this.logueado = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
-    this.items = [
-
-      {
-        label: 'Administrador',
-        icon: 'pi pi-user',
-        items: [
-          {
-            label: 'Perfil',
-            icon: 'pi pi-user',
-            // routerLink: ['/usuarios'],
-          },
-          {
-            label: 'Cerrar Sesión',
-            icon: 'pi pi-fw pi-power-off'
-          },
-        ]
-
-      },
-    ];
     this.itemsSide = [
 
       {
@@ -72,6 +83,13 @@ export class AppComponent implements OnInit {
         id: '4',
         title: '/estadisticas'
       },
+      {
+        label: 'Cambiar Contraseña',
+        icon: 'pi pi-lock',
+        style: { 'noSeleccionado': true },
+        id: '5',
+        title: '/cambiarContrasenia'
+      },
     ];
   }
 
@@ -89,6 +107,7 @@ export class AppComponent implements OnInit {
 
 
   isHomeRouteActivated() {
+    window.location.reload();
     return this.router.url;
   }
 
@@ -103,14 +122,15 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
+    this.logueado = undefined;
     sessionStorage.clear();
     this.router.navigate(['/']);
   }
 
-  mostarMenu(){
-    this.mostrarMenu =!this.mostrarMenu;
+  mostarMenu() {
+    this.mostrarMenu = !this.mostrarMenu;
     console.log(this.mostrarMenu);
-  
+
   }
 }
 

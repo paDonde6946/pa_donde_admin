@@ -5,6 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { AlertasService } from '../core/_services/alerta.service';
 import { CoreService } from '../core/_services/core.services';
 import { tipoUsuario, estadoUsuario } from '../core/_util/usuario-util';
+import { CONSTANTES, CONSTANTES_SESION } from '../core/_util/services-util';
 
 @Component({
   selector: 'app-usuarios',
@@ -27,6 +28,7 @@ export class UsuariosComponent implements OnInit {
   tipo = tipoUsuario;
   estado: any = estadoUsuario;
   uid: any;
+  primera: boolean = false;
 
   // Loader
   cargando: boolean = true;
@@ -46,6 +48,15 @@ export class UsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (sessionStorage.length == 3) {
+      sessionStorage.setItem(CONSTANTES_SESION.MENU, 'menu_desactivado');
+      if (sessionStorage.getItem(CONSTANTES_SESION.MENU) == 'menu_desactivado') {
+        location.reload();
+        sessionStorage.setItem(CONSTANTES_SESION.MENU, 'menu_activado');
+      } else {
+        sessionStorage.setItem(CONSTANTES_SESION.MENU, 'menu_desactivado');
+      }
+    }
 
     // Columnas definidas para las columnas de la tabla de usuarios
     this.columnas = [

@@ -1,4 +1,38 @@
-<div class="sidebar" *ngIf="validarSesion() == true">
+<mat-toolbar>
+    <button mat-icon-button (click)="sidenav.toggle()" *ngIf="logueado">
+        <mat-icon *ngIf="!menu">
+            menu
+        </mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button class="right" (click)="logout()" *ngIf="logueado">
+        <mat-icon>
+            login
+        </mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenar="matSidenav" class="mat-elevation-z4" *ngIf="logueado">
+        <!-- alt="Card" imagen -->
+        <img src="assets/image/logos/logo_padonde.png" style="width:100%;">
+        <mat-divider></mat-divider>
+        <br>
+        <div *ngFor="let item of itemsSide" class="item">
+            <button pButton label="{{item.label}}" icon="{{item.icon}}" [ngClass]="item.style"
+                (click)="cambiarEstadoAccion(item.id)"></button>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="content">
+            <router-outlet>
+            </router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <div class="sidebar" *ngIf="validarSesion() == true">
     <div class="grid justify-content-center">
         <img alt="Card" src="assets/image/logos/logo_padonde.png" style="width:80%;">
     </div>
@@ -16,22 +50,19 @@
                 (click)="cambiarEstadoAccion(item.id)"></button>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="toolbarSuperior" *ngIf="validarSesion() == true">
+<!-- <div class="toolbarSuperior" *ngIf="validarSesion() == true">
     <p-toolbar>
         <div class="p-toolbar-group-left">
         </div>
         <div class="p-toolbar-group-right">
-            <button pButton icon="pi pi-user" label="Perfil" class="botonNaranja"></button>
-            <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar"
-                (click)="logout()"></button>
+            <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" class="botonTopBar" (click)="logout()"></button>
         </div>
     </p-toolbar>
 </div>
 
-<div class="continer-center" >
+<div class="continer-center">
     <router-outlet>
     </router-outlet>
-</div>
-
+</div> -->

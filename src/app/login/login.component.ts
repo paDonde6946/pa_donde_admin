@@ -96,6 +96,7 @@ export class LoginComponent implements OnInit {
             this.cambiarContrasenia = false;
             sessionStorage.setItem(CONSTANTES_SESION.CORREO, params.correo);
             sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+            sessionStorage.setItem(CONSTANTES_SESION.ID, res.usuario.uid);
             this.router.navigate(['/usuarios']);
           }
         },

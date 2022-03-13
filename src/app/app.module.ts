@@ -31,6 +31,12 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { CambiarContraseniaComponent } from './cambiar-contrasenia/cambiar-contrasenia.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -42,6 +48,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
           CargandoComponent,
           ServiciosComponent,
           EstadisticasComponent,
+          CambiarContraseniaComponent,
   ],
   imports: [
     AppRoutes,
@@ -66,7 +73,13 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     RouterTestingModule,
     ProgressBarModule,
     InputTextareaModule,
-    CalendarModule
+    CalendarModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule
   ],
   providers: [AuthGuard, MessageService,ConfirmationService, RouterTestingModule ],
   bootstrap: [AppComponent]

@@ -45,6 +45,7 @@ h1 {
     border-radius: 25px;
     margin: 40px;
     display: flow-root;
+    padding-top: 15px;
 }
 
 .boxEstadistica {
@@ -174,3 +175,5 @@ h1 {
 .p-progressbar .p-progressbar-value {
     background-color: $primary-color !important;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
