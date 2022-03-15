@@ -114,19 +114,26 @@ export class LoginComponent implements OnInit {
       contrasenia: this.formularioNuevaContrasenia.value.contrasenia1,
       token: this.token
     }
-    
+    const criteriosContrasenia = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
     if (this.formularioNuevaContrasenia.value.contrasenia1 != this.formularioNuevaContrasenia.value.contrasenia2) {
       this.msj.alerta('La contraseña no coincide');
-    } else {
-      console.log(sessionStorage.getItem(CONSTANTES_SESION.TOKEN));
-      console.log(sessionStorage.getItem(CONSTANTES_SESION.CORREO));
+    } 
+    else if (!criteriosContrasenia.test(this.formularioNuevaContrasenia.value.contrasenia1)) {
+      this.msj.alerta("La contraseña debe contener al menos 1 mayúscula, 1 minúscula, 1 número y 1 caracter especial y poseer mas de 8 caracteres")
+    }
+    else {
       this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
-
         (res: any) => {
+          // console.log('1');
           sessionStorage.setItem(CONSTANTES_SESION.TOKEN, res.token);
+          // console.log('2');
           this.cambiarContrasenia = false;
+          // console.log('3');
           this.recuperar = false;
+          // console.log('4');
           this.loginAdmin = true;
+          // console.log('5');
           this.msj.info('Contraseña actualizada exitosamente');
           this.formularioLogin.reset();
         },

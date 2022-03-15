@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.logueado = sessionStorage.getItem(CONSTANTES_SESION.TOKEN);
+    this.logueado = sessionStorage.getItem(CONSTANTES_SESION.CORREO);
     this.itemsSide = [
 
       {

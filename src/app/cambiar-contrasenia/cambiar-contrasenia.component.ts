@@ -15,6 +15,7 @@ export class CambiarContraseniaComponent implements OnInit {
 
   formBuilder: FormBuilder;
   formularioRecuperar = new FormGroup({
+    contraseniaActual: new FormControl('', Validators.compose([Validators.required])),
     contrasenia1: new FormControl('', Validators.compose([Validators.required])),
     contrasenia2: new FormControl('', Validators.compose([Validators.required])),
   })
@@ -34,11 +35,18 @@ export class CambiarContraseniaComponent implements OnInit {
 
     let params = {
       uid: sessionStorage.getItem(CONSTANTES_SESION.ID),
-      contrasenia: this.formularioRecuperar.value.contrasenia1,
+      contraseniaActual: this.formularioRecuperar.value.contraseniaActual,
+      contrasenia: this.formularioRecuperar.value.contrasenia1
     }
-    if (this.formularioRecuperar.value.contrasenia1 == '' || this.formularioRecuperar.value.contrasenia2 == '') {
+
+    const criteriosContrasenia = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+    if (this.formularioRecuperar.value.contraseniaActual == '' || this.formularioRecuperar.value.contrasenia1 == '' || this.formularioRecuperar.value.contrasenia2 == '') {
       this.msj.alerta("Debe rellenar los campos solicitados.")
-    } else if (this.formularioRecuperar.value.contrasenia1 != this.formularioRecuperar.value.contrasenia2) {
+    } else if (!criteriosContrasenia.test(this.formularioRecuperar.value.contrasenia1)) {
+      this.msj.alerta("La contraseña debe contener al menos 1 mayúscula, 1 minúscula, 1 número y 1 caracter especial y poseer mas de 8 caracteres")
+    }
+    else if (this.formularioRecuperar.value.contrasenia1 != this.formularioRecuperar.value.contrasenia2) {
       this.msj.alerta('La contraseña no coincide');
     } else {
       this.coreService.post('/login/cambiarContraseniaAdmin', params).subscribe(
@@ -48,7 +56,12 @@ export class CambiarContraseniaComponent implements OnInit {
           this.formularioRecuperar.reset();
         },
         (err: any) => {
-          console.log(err);
+          try{
+            this.msj.error('La contraseña actual ingresada no es correcta');
+          } catch(e){
+            console.log(err);
+            console.error('error', e);
+          }
         }
       )
     }

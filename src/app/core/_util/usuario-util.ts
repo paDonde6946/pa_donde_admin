@@ -9,7 +9,7 @@ export const tipoUsuario = [
 // ]
 
 export const estadoUsuario = { 0 : 'Inactivo' , 1 : 'Activo'  };
-export const estadoServicio = { 2 : 'Inactivo' , 1 : 'Activo'  };
+export const estadoServicio = {1 : 'Activo', 2 : 'En Camino' , 3 : 'Finalizado' , 4 : 'Inactivo' };
 
 /**
  * 1 : Carro
