@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../core/_services/core.services';
+import { estadoServicio } from '../core/_util/usuario-util';
 
 @Component({
   selector: 'app-estadisticas',
@@ -12,7 +13,11 @@ export class EstadisticasComponent implements OnInit {
   totalVehiculos: any;
   totalConductores: any;
 
+  data: any;
+  chartOptions: any;
+
   cargando: boolean = false; //true
+
   constructor(
     public coreService: CoreService,
   ) { }
@@ -22,23 +27,30 @@ export class EstadisticasComponent implements OnInit {
     this.getTotalUsuarios();
     this.getTotalVehiculos();
     this.getTotalConductores();
+
   }
-  async getTotalConductores() {
+
+  async getTotalConductores(): Promise<number> {
     await this.coreService.get('/dashboard/estadisticas/cantidadConductores').subscribe(
       (res: any) => {
-          this.totalConductores = res.value
-          this.cargando = false;
+        this.totalConductores = res.value
+        this.data.push(this.totalConductores);
+        this.cargando = false;
+        return this.totalConductores;
       },
       (err: any) => {
         console.log(err);
+        return 0;
       }
     );
+
+    return this.totalConductores;
   }
   async getTotalVehiculos() {
     await this.coreService.get('/dashboard/estadisticas/cantidadVehiculos').subscribe(
       (res: any) => {
-          this.totalVehiculos = res.value
-          this.cargando = false;
+        this.totalVehiculos = res.value
+        this.cargando = false;
       },
       (err: any) => {
         console.log(err);
@@ -48,13 +60,12 @@ export class EstadisticasComponent implements OnInit {
   async getTotalUsuarios() {
     await this.coreService.get('/dashboard/estadisticas/cantidadUsuarios').subscribe(
       (res: any) => {
-          this.totalUsuarios = res.value
-          this.cargando = false;
+        this.totalUsuarios = res.value
+        this.cargando = false;
       },
       (err: any) => {
         console.log(err);
       }
     );
   }
-
 }

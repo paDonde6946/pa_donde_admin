@@ -6,7 +6,6 @@ import { LoginComponent } from './login/login.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import {HttpClientModule} from '@angular/common/http';
 import { AppConfig } from './app.config';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
@@ -37,6 +36,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { ChartModule } from 'primeng/chart';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClientModule } from '@angular/common/http';
+// import { AppRoutingModule } from './app-routing.module';
+
+
 
 @NgModule({
   declarations: [
@@ -51,6 +56,9 @@ import { MatDividerModule } from '@angular/material/divider';
           CambiarContraseniaComponent,
   ],
   imports: [
+    BrowserModule,
+    // AppRoutingModule,
+    HttpClientModule,
     AppRoutes,
     InputTextModule,
     ButtonModule,
@@ -68,8 +76,6 @@ import { MatDividerModule } from '@angular/material/divider';
     ConfirmDialogModule,
     InputSwitchModule,
     ProgressSpinnerModule,
-    HttpClientModule,
-    BrowserModule,
     RouterTestingModule,
     ProgressBarModule,
     InputTextareaModule,
@@ -79,7 +85,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    ChartModule
   ],
   providers: [AuthGuard, MessageService,ConfirmationService, RouterTestingModule ],
   bootstrap: [AppComponent]

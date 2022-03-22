@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   ) {
   }
 
+  // Controlador del menu lateral
   ngAfterViewInit() {
 
     this.observer
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit {
       });
   }
 
+  // Inicializacion del componente
   ngOnInit(): void {
 
     this.logueado = sessionStorage.getItem(CONSTANTES_SESION.CORREO);
@@ -93,6 +95,7 @@ export class AppComponent implements OnInit {
     ];
   }
 
+  // Valida la seleccion de los botones del menu lateral
   cambiarEstadoAccion(id: any) {
     this.itemsSide.forEach(item => {
 
@@ -105,12 +108,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-
   isHomeRouteActivated() {
     window.location.reload();
     return this.router.url;
   }
 
+  // Validar la sesion del usuario
   validarSesion() {
     let sesion = sessionStorage.getItem(CONSTANTES_SESION.CORREO);
 
@@ -121,6 +124,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // Cierra la sesion del usuario y limpia las constantes de sesion
   logout() {
     this.logueado = undefined;
     sessionStorage.clear();

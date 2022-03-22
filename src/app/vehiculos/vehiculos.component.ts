@@ -15,25 +15,28 @@ import { estadoUsuario, tipoVehiculo, tipoVehiculoDropdown } from '../core/_util
 })
 export class VehiculosComponent implements OnInit {
 
+  // Variables tabla Vehiculos
+  columnas: any[] = [];
+  listaVehiculos: any[] = [];
+  estado: any = estadoUsuario;
+
   // Estados
   prepararVehiculo: boolean = false;
   botonGuardar: boolean = false;
   botonEditar: boolean = false;
 
+  // Utilidades formulario
   tipoVehiculo: any = tipoVehiculo;
-  cargando: boolean = true;
-  listaVehiculos: any[] = [];
-  columnas: any[] = [];
   tipoVehiculoDropdown: any = tipoVehiculoDropdown;
-
   uid: any = 0;
-
-  estado: any = estadoUsuario;
-
   cedulaUsuario: any;
 
+  // Loader
+  cargando: boolean = true;
+
+  // Formulario para agregar el vehiculo
   formularioVehiculo = new FormGroup({
-    // cedula: new FormControl('', Validators.compose([Validators.required])),
+    cedula: new FormControl('', Validators.compose([Validators.required])),
     placa: new FormControl('', Validators.compose([Validators.required])),
     tipoVehiculo: new FormControl('', Validators.compose([Validators.required])),
     color: new FormControl('', Validators.compose([Validators.required])),
@@ -42,15 +45,18 @@ export class VehiculosComponent implements OnInit {
     modelo: new FormControl('', Validators.compose([Validators.required]))
   });
 
+  // Constructor del componente vehiculo
   constructor(
     public coreService: CoreService,
     public msj: AlertasService,
     public confirmationService: ConfirmationService
   ) { }
 
+  // Inicializacion del componente
   ngOnInit(): void {
+
+    // Columnas definidas para las columnas de la tabla de usuarios
     this.columnas = [
-      // { header: 'Cédula', field: 'cedula' },
       { header: 'Placa', field: 'placa' },
       { header: 'TipoVehiculo', field: 'tipoVehiculoLabel' },
       { header: 'Color', field: 'color' },
@@ -66,6 +72,7 @@ export class VehiculosComponent implements OnInit {
     await this.getListadoVehiculos();
   }
 
+  // Metodo para obtener el listado de vehiculos
   async getListadoVehiculos() {
     await this.coreService.get('/vehiculos/listarVehiculos').subscribe(
       (res: any) => {
@@ -84,6 +91,7 @@ export class VehiculosComponent implements OnInit {
     )
   }
 
+  // Metodo para cambiar el estao del vehiculo
   setEstado(uid: any) {
     let id = {
       id: uid
@@ -103,12 +111,12 @@ export class VehiculosComponent implements OnInit {
     )
   }
 
+  // Metodo para ingresar a la pantalla de editar vehiculo y cargar los datos
   editarVehiculo(data: any) {
     this.uid = data.uid;
     this.prepararVehiculo = true;
     this.botonGuardar = false;
     this.botonEditar = true;
-    // this.formularioVehiculo.controls['cedula'].setValue(data.cedula);
     this.formularioVehiculo.controls['placa'].setValue(data.placa);
     this.formularioVehiculo.controls['tipoVehiculo'].setValue(data.tipoVehiculo);
     this.formularioVehiculo.controls['color'].setValue(data.color);
@@ -118,6 +126,7 @@ export class VehiculosComponent implements OnInit {
 
   }
 
+  // Metodo para ingresar a la pantalla de agregar vehiculo
   agregarVehiculo() {
     this.prepararVehiculo = true;
     this.botonGuardar = true;
@@ -125,36 +134,41 @@ export class VehiculosComponent implements OnInit {
     this.formularioVehiculo.reset();
   }
 
+  // Metodo para regresar
   volver() {
     this.prepararVehiculo = false;
     this.botonGuardar = false;
     this.botonEditar = false;
   }
 
+  // Metodo del boton guardar para agregar el vehiculo
   agregar() {
-    // this.validarUsuario(this.formularioVehiculo.value.cedula);
-
-    // if (this.cedulaUsuario == null || this.cedulaUsuario == '' || this.cedulaUsuario == undefined) {
-    //   this.msj.alerta("La cédula no se encuentra registrada.");
-    // } else {
-    let data = this.formularioVehiculo.valid;
-    if (data) {
-      this.confirmationService.confirm({
-        message: '¿Desea guardar este vehículo?',
-        accept: () => {
-          this.formularioVehiculo.markAllAsTouched();
-          this.putGuardarVehiculo();
-        }
-      });
+    // Valida que el usuario al cual se le agrega el vehiculo exista en el sistema
+    this.validarUsuario(this.formularioVehiculo.value.cedula);
+    // Valida que el campo cedula no se encuentre vacio
+    if (this.cedulaUsuario == null || this.cedulaUsuario == '' || this.cedulaUsuario == undefined) {
+      this.msj.alerta("La cédula no se encuentra registrada.");
     } else {
-      this.formularioVehiculo.markAllAsTouched();
+      let data = this.formularioVehiculo.valid;
+      // Valida la data del formulario
+      if (data) {
+        this.confirmationService.confirm({
+          message: '¿Desea guardar este vehículo?',
+          accept: () => {
+            this.formularioVehiculo.markAllAsTouched();
+            this.putGuardarVehiculo();
+          }
+        });
+      } else {
+        this.formularioVehiculo.markAllAsTouched();
+      }
     }
-    // }
   }
 
+  // Metodo para guardar un vehiculo
   putGuardarVehiculo() {
     let params = {
-      // cedula: parseInt(this.formularioVehiculo.value.cedula),
+      cedula: parseInt(this.formularioVehiculo.value.cedula),
       placa: this.formularioVehiculo.value.placa,
       tipoVehiculo: this.formularioVehiculo.value.tipoVehiculo,
       color: this.formularioVehiculo.value.color,
@@ -162,7 +176,7 @@ export class VehiculosComponent implements OnInit {
       anio: this.formularioVehiculo.value.anio,
       modelo: this.formularioVehiculo.value.modelo
     };
-    console.log(params);
+    
     this.coreService.post('/vehiculos/agregarVehiculo', params).subscribe(
       (res: any) => {
 
@@ -180,6 +194,7 @@ export class VehiculosComponent implements OnInit {
     )
   }
 
+  // Metodo para validar que el usuario exista en el sistema
   validarUsuario(cedula: any) {
     this.coreService.get('/usuario/traerUsuarioXCedula/' + cedula).subscribe(
       (res: any) => {
@@ -188,15 +203,14 @@ export class VehiculosComponent implements OnInit {
       (err: any) => {
         console.log(err);
       }
-
     );
-
   }
 
+  // Metodo para actualizar el vehiculo
   actualizar() {
     if (this.formularioVehiculo.valid) {
       let data = {
-        // cedula: this.formularioVehiculo.controls['cedula'].value,
+        cedula: this.formularioVehiculo.controls['cedula'].value,
         placa: this.formularioVehiculo.controls['placa'].value,
         tipoVehiculo: this.formularioVehiculo.controls['tipoVehiculo'].value,
         color: this.formularioVehiculo.controls['color'].value,

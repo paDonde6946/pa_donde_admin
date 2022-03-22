@@ -3,6 +3,9 @@
 @import 'style/style_navbar.scss';
 @import 'style/syle_general.scss';
 
+html, body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
 body {
     background-color: whitesmoke;

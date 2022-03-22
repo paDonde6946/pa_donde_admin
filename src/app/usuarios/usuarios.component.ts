@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { AlertasService } from '../core/_services/alerta.service';
 import { CoreService } from '../core/_services/core.services';
@@ -24,15 +24,19 @@ export class UsuariosComponent implements OnInit {
   prepararUsuario: boolean = false;
   botonGuardar: boolean = false;
   botonEditar: boolean = false;
+
   // Utilidades formulario
   tipo = tipoUsuario;
   estado: any = estadoUsuario;
   uid: any;
-  primera: boolean = false;
 
   // Loader
   cargando: boolean = true;
 
+  // Variables para pruebas unitarias
+  check: any;
+
+  // Formulario para agregar el usuario
   formularioUsuario = new FormGroup({
     cedula: new FormControl('', Validators.compose([Validators.required])),
     correo: new FormControl('', Validators.compose([Validators.required])),
@@ -41,12 +45,16 @@ export class UsuariosComponent implements OnInit {
     apellido: new FormControl('', Validators.compose([Validators.required])),
     celular: new FormControl('', Validators.compose([Validators.required])),
   });
+
+  // Constructor del componente usuario
   constructor(
     public coreService: CoreService,
     public msj: AlertasService,
     public confirmationService: ConfirmationService,
+    // private form: FormBuilder
   ) { }
 
+  // Inicializacion del componente
   ngOnInit(): void {
     if (sessionStorage.length == 3) {
       sessionStorage.setItem(CONSTANTES_SESION.MENU, 'menu_desactivado');
@@ -93,9 +101,9 @@ export class UsuariosComponent implements OnInit {
   prepararNuevo() {
 
     this.prepararUsuario = true;
+    this.formularioUsuario.reset();
     this.botonGuardar = true;
     this.botonEditar = false;
-    this.formularioUsuario.reset();
   }
 
   // Metodo para boton Volver
@@ -107,18 +115,21 @@ export class UsuariosComponent implements OnInit {
 
   // Boton guardar Usuario
   agregar() {
-
+    this.check = {data: 1}
+    // Valida si el formulario fue diligenciado completo
     if (!this.formularioUsuario.valid) {
       this.formularioUsuario.markAllAsTouched();
     } else {
       let correo = this.formularioUsuario.value.correo.toString().split("@");
-
+      // Valida si el correo es de la u
       if (correo[1] != 'unbosque.edu.co') {
         this.msj.alerta('El correo ingresado no es válido.')
       } else {
+        // Valida la longitud del telefono
         if (this.formularioUsuario.value.celular != null && this.formularioUsuario.value.celular.toString().length != 10) {
           this.msj.alerta('El número de teléfono no válido.')
         } else {
+          // Valida la longitud de la cedula
           if (this.formularioUsuario.value.cedula != null && this.formularioUsuario.value.cedula.toString().length != 10) {
             this.msj.alerta('La cédula no es válida.')
           }
@@ -129,6 +140,7 @@ export class UsuariosComponent implements OnInit {
                 message: '¿Desea guardar este usuario?',
                 accept: () => {
                   this.formularioUsuario.markAllAsTouched();
+                  // Guarda el usuario
                   this.putGuardarUsuario();
                 }
               });
@@ -154,7 +166,7 @@ export class UsuariosComponent implements OnInit {
     this.formularioUsuario.controls['celular'].setValue(data.celular);
   }
 
-  // Metodo para cargador valores de lista al editar
+  // Metodo para cargar valores de lista al editar
   cargarDatosEditar(iLista: any, valor: any) {
     if (iLista !== undefined && iLista != null) {
       for (let i = 0; i < iLista.length; i++) {
@@ -178,7 +190,6 @@ export class UsuariosComponent implements OnInit {
 
     this.coreService.putWithOutParam('/login/usuario/registrar', params).subscribe(
       (res: any) => {
-        console.log(res);
         this.msj.info('Usuario Guardado Correctamente');
         this.getListadoUsuarios();
         this.prepararUsuario = false;
@@ -244,6 +255,7 @@ export class UsuariosComponent implements OnInit {
     )
   }
 
+  // Metodo para actualizar el usuario
   actualizarEstado(data: any) {
     let params = {
       uid: data.uid

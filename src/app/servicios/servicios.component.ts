@@ -19,21 +19,21 @@ export class ServiciosComponent implements OnInit {
   registroLista: any[] = [];
   totalRecords = 0;
 
-
-  existe: boolean = false;
   // Utilidades
   uid: any;
   estado: any = estadoServicio;
-  // fecha = new Date;
 
   // Loader
   cargando: boolean = true;
+
+  // Constructor del componente servicios
   constructor(
     public coreService: CoreService,
     public msj: AlertasService,
     public confirmationService: ConfirmationService,
   ) { }
 
+  // Inicializacion del componente
   ngOnInit(): void {
     // Columnas definidas para la de la tabla de servicios
     this.columnas = [
@@ -47,7 +47,7 @@ export class ServiciosComponent implements OnInit {
     this.getListadoServicios();
   }
 
-  // Metodo para obtener el listado de usuarios
+  // Metodo para obtener el listado de servicios
   async getListadoServicios() {
 
     await this.coreService.get('/servicio/listarServicio').subscribe(
@@ -76,11 +76,12 @@ export class ServiciosComponent implements OnInit {
     }
   }
 
+  // Metodo para actualizar el estado del servicio
   actualizarEstado(data: any) {
     let params = {
       uid: data.uid
     }
-    console.log(params.uid);
+
     this.coreService.put('/servicio/cambiarEstado', params).subscribe(
       (res: any) => {
 
