@@ -145,10 +145,10 @@
                 <p-toolbar>
                     <div class="ui-toolbar-group-left">
                         <button *ngIf="botonGuardar" pButton label="Guardar" class="botonNaranja" icon="pi pi-save"
-                            pTooltip="Guardar" (click)="agregar()">
+                            pTooltip="Guardar" (click)="agregar()" id="btnAgregar">
                         </button>
                         <button *ngIf="botonEditar" pButton label="Editar" class="botonNaranja" icon="pi pi-save"
-                            pTooltip="Editar" (click)="actualizar()">
+                            pTooltip="Editar" (click)="actualizar()" id="btnEditar">
                         </button>
                     </div>
                     <div class="ui-toolbar-group-right">

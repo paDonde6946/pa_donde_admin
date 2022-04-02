@@ -18,12 +18,12 @@ export class UsuariosComponent implements OnInit {
   // Variables tabla Usuarios
   columnas: any[] = [];
   registroLista: any[] = [];
-  totalRecords = 0;
 
   // Estados
   prepararUsuario: boolean = false;
   botonGuardar: boolean = false;
   botonEditar: boolean = false;
+  error: boolean = false;
 
   // Utilidades formulario
   tipo = tipoUsuario;
@@ -84,15 +84,17 @@ export class UsuariosComponent implements OnInit {
     await this.coreService.get('/usuario/listaUsuarios').subscribe(
       (res: any) => {
         this.registroLista = res.listaUsuario;
-        this.totalRecords = this.registroLista.length;
         this.registroLista.forEach(element => {
           element.estado = this.estado[element.estado]
         })
 
         this.cargando = false;
+        this.error = false;
       },
       (err: any) => {
         console.log(err);
+        this.error = true;
+        this.registroLista = [];
       }
     )
   }
@@ -115,7 +117,7 @@ export class UsuariosComponent implements OnInit {
 
   // Boton guardar Usuario
   agregar() {
-    this.check = {data: 1}
+    this.check = { data: 1 }
     // Valida si el formulario fue diligenciado completo
     if (!this.formularioUsuario.valid) {
       this.formularioUsuario.markAllAsTouched();
@@ -193,13 +195,11 @@ export class UsuariosComponent implements OnInit {
         this.msj.info('Usuario Guardado Correctamente');
         this.getListadoUsuarios();
         this.prepararUsuario = false;
+        // this.error = false;
       },
       (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
+        console.log(err);
+        this.error = true;
       }
     )
   }

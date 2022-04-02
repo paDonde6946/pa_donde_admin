@@ -8,21 +8,32 @@
         <div class="grid">
             <div class="boxEstadistica col-2 md:col-2 lg:col-2">
                 <h2 class="tituloEstadistica">{{totalUsuarios}}</h2>
-                <h2 class="tituloEstadistica">Total Usuarios</h2>
-            </div>
-            <div class="boxEstadistica2 col-2 md:col-2 lg:col-2">
-                <h2 class="tituloEstadistica">{{totalVehiculos}}</h2>
-                <h2 class="tituloEstadistica">Total Vehículos</h2>
+                <h2 class="tituloEstadistica">Total de usuarios</h2>
             </div>
             <div class="boxEstadistica3 col-2 md:col-2 lg:col-2">
                 <h2 class="tituloEstadistica">{{totalConductores}}</h2>
-                <h2 class="tituloEstadistica">Total Conductores</h2>
+                <h2 class="tituloEstadistica">Usuarios conductores</h2>
+            </div>
+            <div class="boxEstadistica2 col-2 md:col-2 lg:col-2">
+                <h2 class="tituloEstadistica">{{totalVehiculos}}</h2>
+                <h2 class="tituloEstadistica">Total vehículos</h2>
             </div>
             <div class="boxEstadistica4 col-2 md:col-2 lg:col-2">
-                <h2 class="tituloEstadistica">10</h2>
-                <h2 class="tituloEstadistica">Total Viajes</h2>
+                <h2 class="tituloEstadistica">{{totalServicios}}</h2>
+                <h2 class="tituloEstadistica">Número total de servicios</h2>
             </div>
         </div>
         <br><br>
+    </div>
+    <div class="grid">
+        <div class="box col-7">
+            <h1 class="titulo">Conductores con más servicios realizados</h1>
+            <p-chart type="bar" [data]="dataConductores" [options]="basicOptions"></p-chart>
+        </div>
+        <div class="box col-3">
+            <h1 class="titulo">Carros vs Motos</h1>
+            <p-chart type="doughnut" [data]="dataTipo" [options]="chartOptions" [style]="{'width': '40%'}">
+            </p-chart>
+        </div>
     </div>
 </div>

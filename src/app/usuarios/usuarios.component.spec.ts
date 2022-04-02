@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MessageService } from 'primeng/api';
 import { UsuariosComponent } from './usuarios.component';
 import { By } from '@angular/platform-browser';
+import { of, throwError } from 'rxjs';
 
 describe('UsuariosComponent', () => {
   let component: UsuariosComponent;
@@ -65,4 +66,36 @@ describe('UsuariosComponent', () => {
     expect(form.valid).toBeTrue();
 
   });
+
+  describe('Cuando getListadoUsuarios() es llamado', () => {
+    
+    it('Deberia manejar un error', () => {
+      spyOn(component.coreService, 'get').and.returnValue(throwError({ error: 'error' }));
+      component.getListadoUsuarios();
+      expect(component.error).toBeTrue();
+    });
+    
+    it('Todo deberia ir bien', () => {
+      spyOn(component.coreService, 'get').and.returnValue(of({ users: [] }));
+      component.getListadoUsuarios();
+      expect(component.cargando).toBeTrue();
+      expect(component.error).toBeFalsy();
+    });
+  });
+
+  describe('Cuando putGuardarUsuario() es llamado', () => {
+    
+    it('Deberia manejar un error', () => {
+      spyOn(component.coreService, 'putWithOutParam').and.returnValue(throwError({ error: 'error' }));
+      component.putGuardarUsuario();
+      expect(component.error).toBeTrue();
+    });
+    
+    it('Todo deberia ir bien', () => {
+      spyOn(component.coreService, 'putWithOutParam').and.returnValue(of({ users: [] }));
+      component.putGuardarUsuario();
+      expect(component.error).toBeFalsy();
+    });
+  });
+
 });
