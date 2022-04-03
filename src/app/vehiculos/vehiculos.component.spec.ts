@@ -3,7 +3,6 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { VehiculosComponent } from './vehiculos.component';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { By } from '@angular/platform-browser';
 
 describe('VehiculosComponent', () => {
   let component: VehiculosComponent;

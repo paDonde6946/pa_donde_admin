@@ -243,14 +243,12 @@ export class UsuariosComponent implements OnInit {
         this.msj.info("Usuario actualizado exitosamente");
         this.getListadoUsuarios();
         this.prepararUsuario = false;
+        this.error = false;
       },
 
       (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
+        this.error = true;
+        console.log(err);
       }
     )
   }

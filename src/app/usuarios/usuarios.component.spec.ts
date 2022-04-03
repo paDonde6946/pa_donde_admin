@@ -68,34 +68,71 @@ describe('UsuariosComponent', () => {
   });
 
   describe('Cuando getListadoUsuarios() es llamado', () => {
-    
+
     it('Deberia manejar un error', () => {
       spyOn(component.coreService, 'get').and.returnValue(throwError({ error: 'error' }));
       component.getListadoUsuarios();
       expect(component.error).toBeTrue();
     });
-    
+
     it('Todo deberia ir bien', () => {
       spyOn(component.coreService, 'get').and.returnValue(of({ users: [] }));
       component.getListadoUsuarios();
       expect(component.cargando).toBeTrue();
-      expect(component.error).toBeFalsy();
+      expect(component.error).toBeFalse();
     });
   });
 
   describe('Cuando putGuardarUsuario() es llamado', () => {
-    
+
     it('Deberia manejar un error', () => {
       spyOn(component.coreService, 'putWithOutParam').and.returnValue(throwError({ error: 'error' }));
       component.putGuardarUsuario();
       expect(component.error).toBeTrue();
     });
-    
+
     it('Todo deberia ir bien', () => {
       spyOn(component.coreService, 'putWithOutParam').and.returnValue(of({ users: [] }));
       component.putGuardarUsuario();
       expect(component.error).toBeFalsy();
     });
+  });
+
+  describe('Cuando postActualizarUsuario() es llamado', () => {
+
+    it('Deberia manejar un error', () => {
+      spyOn(component.coreService, 'post').and.returnValue(throwError({ error: 'error' }));
+      component.postActualizarUsuario();
+      expect(component.error).toBeTrue();
+    });
+
+    it('Todo deberia ir bien', () => {
+      spyOn(component.coreService, 'post').and.returnValue(of({ users: [] }));
+      component.postActualizarUsuario();
+      expect(component.error).toBeFalse();
+    });
+  });
+
+  it('Estados componentes en prepararNuevo()', () => {
+    component.prepararNuevo();
+    fixture.detectChanges();
+    expect(component.prepararNuevo).toBeTruthy();
+    expect(component.botonGuardar).toBeTruthy();
+    expect(component.botonEditar).toBeFalse();
+  });
+
+  it('Estados componentes en volver()', () => {
+    component.volver();
+    fixture.detectChanges();
+    expect(component.botonGuardar).toBeFalse();
+    expect(component.botonEditar).toBeFalse();
+  });
+
+  it('Estados componentes en volver()', () => {
+    component.volver();
+    fixture.detectChanges();
+    expect(component.botonGuardar).toBeFalse();
+    expect(component.botonEditar).toBeFalse();
   });
 
 });
