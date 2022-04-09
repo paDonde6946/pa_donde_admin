@@ -143,26 +143,29 @@ export class VehiculosComponent implements OnInit {
 
   // Metodo del boton guardar para agregar el vehiculo
   agregar() {
-    // Valida que el usuario al cual se le agrega el vehiculo exista en el sistema
-    this.validarUsuario(this.formularioVehiculo.value.cedula);
-    // Valida que el campo cedula no se encuentre vacio
-    if (this.cedulaUsuario == null || this.cedulaUsuario == '' || this.cedulaUsuario == undefined) {
-      this.msj.alerta("La cédula no se encuentra registrada.");
-    } else {
-      let data = this.formularioVehiculo.valid;
-      // Valida la data del formulario
-      if (data) {
-        this.confirmationService.confirm({
-          message: '¿Desea guardar este vehículo?',
-          accept: () => {
-            this.formularioVehiculo.markAllAsTouched();
-            this.putGuardarVehiculo();
-          }
-        });
-      } else {
-        this.formularioVehiculo.markAllAsTouched();
+    this.coreService.get('/usuario/traerUsuarioXCedula/' + this.formularioVehiculo.value.cedula).subscribe(
+      (res: any) => {
+        let data = this.formularioVehiculo.valid;
+        // Valida la data del formulario
+        if (data) {
+          this.confirmationService.confirm({
+            message: '¿Desea guardar este vehículo?',
+            accept: () => {
+              this.formularioVehiculo.markAllAsTouched();
+              this.putGuardarVehiculo();
+            }
+          });
+        } else {
+          this.formularioVehiculo.markAllAsTouched();
+        }
+      },
+      (err: any) => {
+        this.msj.alerta("La cédula no se encuentra registrada.");
+        console.log(err);
       }
-    }
+    );
+
+
   }
 
   // Metodo para guardar un vehiculo
@@ -176,7 +179,7 @@ export class VehiculosComponent implements OnInit {
       anio: this.formularioVehiculo.value.anio,
       modelo: this.formularioVehiculo.value.modelo
     };
-    
+
     this.coreService.post('/vehiculos/agregarVehiculo', params).subscribe(
       (res: any) => {
 
@@ -199,6 +202,7 @@ export class VehiculosComponent implements OnInit {
     this.coreService.get('/usuario/traerUsuarioXCedula/' + cedula).subscribe(
       (res: any) => {
         this.cedulaUsuario = res
+        console.log(this.cedulaUsuario + " metodo");
       },
       (err: any) => {
         console.log(err);

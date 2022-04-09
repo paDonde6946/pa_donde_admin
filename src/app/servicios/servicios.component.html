@@ -22,8 +22,10 @@
                 <tr>
                     <td *ngFor="let col of columns">
                         <span class="p-column-title">{{col.header}}</span>
-                        {{ rowData[col.field] ? rowData[col.field] :
-                        'No disponible' }}
+                        {{ rowData[col.field] ? col.field=='fechayhora' ? (rowData[col.field] | date: 'dd-MM-yyyy / HH:mm:ss') : rowData[col.field] :
+                            'No disponible' }}
+                        <!-- {{ rowData[col.field] ? rowData[col.field] :
+                        'No disponible' }} -->
                     </td>
                     <td>
                         <button pButton label="Estado" class="botonTransparente" icon="pi pi-user-edit"

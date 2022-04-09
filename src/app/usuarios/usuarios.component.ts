@@ -190,7 +190,7 @@ export class UsuariosComponent implements OnInit {
       cedula: this.formularioUsuario.value.cedula
     };
 
-    this.coreService.putWithOutParam('/login/usuario/registrar', params).subscribe(
+    this.coreService.putWithOutParam('/usuario/crearUsuario', params).subscribe(
       (res: any) => {
         this.msj.info('Usuario Guardado Correctamente');
         this.getListadoUsuarios();

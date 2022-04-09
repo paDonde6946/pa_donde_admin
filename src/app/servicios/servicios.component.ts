@@ -40,7 +40,7 @@ export class ServiciosComponent implements OnInit {
       { header: 'Punto Inicio', field: 'nombreOrigen' },
       { header: 'Punto Final', field: 'nombreDestino' },
       { header: 'Cupos Totales', field: 'cantidadCupos' },
-      { header: 'Fecha', field: 'fechayhora' },
+      { header: 'Fecha y Hora', field: 'fechayhora' },
       { header: 'Estado', field: 'estado' },
     ];
 
