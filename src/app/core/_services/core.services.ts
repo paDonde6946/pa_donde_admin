@@ -30,13 +30,13 @@ export class CoreService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'x-token': this.getToken() 
+        // 'x-token': this.getToken() 
       })
     }
     return httpOptions;
   };
   
-  protected baseUrl: string = '/web';
+  protected baseUrl: string = 'http://ec2-3-139-6-165.us-east-2.compute.amazonaws.com:3001/web';
 
   constructor(private http: HttpClient) { }
 

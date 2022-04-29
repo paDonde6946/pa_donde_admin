@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreService } from '../core/_services/core.services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of, throwError } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -114,5 +115,58 @@ describe('LoginComponent', () => {
 
     expect(form.valid).toBeTrue();
 
+  });
+
+  it('Metodo Login()', () => {
+    component.login();
+    fixture.detectChanges();
+  });
+
+  it('Metodo Logout()', () => {
+    component.logout();
+    fixture.detectChanges();
+  });
+
+  it('Metodo recuperarContrasenia()', () => {
+    component.recuperarContrasenia();
+    fixture.detectChanges();
+  });
+
+  it('Metodo guardarContrasenia()', () => {
+    component.guardarContrasenia();
+    fixture.detectChanges();
+  });
+
+  it('Metodo obtainAccessToken(formularioLogin: any)', () => {
+    component.obtainAccessToken('formulario');
+    fixture.detectChanges();
+  });
+
+  
+  it('Metodo volver()', () => {
+    component.volver();
+    fixture.detectChanges();
+  });
+  
+  it('Metodo saveToken(token: any, user: any)', () => {
+    component.saveToken('token', 'user');
+    fixture.detectChanges();
+  });
+
+  describe('Cuando enviarRecuperar() es llamado', () => {
+
+    it('Deberia manejar un error', () => {
+      spyOn(component.coreService, 'post').and.returnValue(throwError({ error: 'error' }));
+      component.enviarRecuperar();
+    });
+
+    it('Todo deberia ir bien', () => {
+      spyOn(component.coreService, 'post').and.returnValue(of({ json: [] }));
+      component.enviarRecuperar();
+      fixture.detectChanges();
+      expect(component.recuperar).toBeFalse();
+      expect(component.cambiarContrasenia).toBeFalse();
+      expect(component.loginAdmin).toBeTrue();
+    });
   });
 });

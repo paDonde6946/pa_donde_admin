@@ -64,7 +64,6 @@ describe('UsuariosComponent', () => {
     celular.setValue(3219992548);
 
     expect(form.valid).toBeTrue();
-
   });
 
   describe('Cuando getListadoUsuarios() es llamado', () => {
@@ -78,7 +77,7 @@ describe('UsuariosComponent', () => {
     it('Todo deberia ir bien', () => {
       spyOn(component.coreService, 'get').and.returnValue(of({ users: [] }));
       component.getListadoUsuarios();
-      expect(component.cargando).toBeTrue();
+      expect(component.cargando).toBeFalse();
       expect(component.error).toBeFalse();
     });
   });
@@ -94,7 +93,7 @@ describe('UsuariosComponent', () => {
     it('Todo deberia ir bien', () => {
       spyOn(component.coreService, 'putWithOutParam').and.returnValue(of({ users: [] }));
       component.putGuardarUsuario();
-      expect(component.error).toBeFalsy();
+      expect(component.error).toBeFalse();
     });
   });
 
@@ -111,6 +110,27 @@ describe('UsuariosComponent', () => {
       component.postActualizarUsuario();
       expect(component.error).toBeFalse();
     });
+  });
+
+  describe('Cuando actualizarEstado(data: any) es llamado', () => {
+
+    it('Deberia manejar un error', () => {
+      spyOn(component.coreService, 'post').and.returnValue(throwError({ error: 'error' }));
+      component.actualizarEstado(1);
+      expect(component.error).toBeTrue();
+    });
+
+    it('Todo deberia ir bien', () => {
+      spyOn(component.coreService, 'post').and.returnValue(of({ users: [] }));
+      component.actualizarEstado(1);
+      // expect(component.getListadoUsuarios()).toHaveBeenCalled();
+      expect(component.prepararUsuario).toBeFalse();
+    });
+  });
+
+  it('Metodo cargarDatosEditar(iLista: any, valor: any)', () => {
+    component.cargarDatosEditar('lista',1);
+    fixture.detectChanges();
   });
 
   it('Estados componentes en prepararNuevo()', () => {
@@ -135,4 +155,50 @@ describe('UsuariosComponent', () => {
     expect(component.botonEditar).toBeFalse();
   });
 
+  it('Metodo Agregar()', () => {
+    component.agregar();
+    fixture.detectChanges();
+
+    const form = component.formularioUsuario;
+    const cedula = component.formularioUsuario.controls['cedula'];
+    let correo = component.formularioUsuario.controls['correo'];
+    const contrasenia = component.formularioUsuario.controls['contrasenia'];
+    const nombre = component.formularioUsuario.controls['nombre'];
+    const apellido = component.formularioUsuario.controls['apellido'];
+    const celular = component.formularioUsuario.controls['celular'];
+
+    cedula.setValue(1127838475);
+    correo.setValue('wramosc@unbosque.edu.co');
+    contrasenia.setValue('Contrasenia123*');
+    nombre.setValue('William');
+    apellido.setValue('Ramos');
+    celular.setValue(3219992548);
+    expect(form.valid).toBeTrue();
+
+  });
+
+  it('Metodo editarUsuario(data: any)', () => {
+    component.editarUsuario(1);
+    fixture.detectChanges();
+  });
+
+  it('Metodo actualizar()', () => {
+    component.actualizar();
+    fixture.detectChanges();
+  });
+
+  it('Metodo editarUsuario(data: any)', () => {
+    component.editarUsuario(1);
+    fixture.detectChanges();
+  });
+
+  it('Metodo campoNoValido(campo: any)', () => {
+    component.campoNoValido('campo');
+    fixture.detectChanges();
+  });
+
+  it('Metodo campoNoValido(campo: any)', () => {
+    component.campoNoValido('campo');
+    fixture.detectChanges();
+  });
 });

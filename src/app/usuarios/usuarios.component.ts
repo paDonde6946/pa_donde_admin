@@ -51,7 +51,6 @@ export class UsuariosComponent implements OnInit {
     public coreService: CoreService,
     public msj: AlertasService,
     public confirmationService: ConfirmationService,
-    // private form: FormBuilder
   ) { }
 
   // Inicializacion del componente
@@ -83,16 +82,15 @@ export class UsuariosComponent implements OnInit {
 
     await this.coreService.get('/usuario/listaUsuarios').subscribe(
       (res: any) => {
+        this.cargando = false;
+        this.error = false;
         this.registroLista = res.listaUsuario;
         this.registroLista.forEach(element => {
           element.estado = this.estado[element.estado]
         })
 
-        this.cargando = false;
-        this.error = false;
       },
       (err: any) => {
-        console.log(err);
         this.error = true;
         this.registroLista = [];
       }
@@ -119,7 +117,7 @@ export class UsuariosComponent implements OnInit {
   agregar() {
     this.check = { data: 1 }
     // Valida si el formulario fue diligenciado completo
-    if (!this.formularioUsuario.valid) {
+    if (this.formularioUsuario.valid) {
       this.formularioUsuario.markAllAsTouched();
     } else {
       let correo = this.formularioUsuario.value.correo.toString().split("@");
@@ -195,7 +193,7 @@ export class UsuariosComponent implements OnInit {
         this.msj.info('Usuario Guardado Correctamente');
         this.getListadoUsuarios();
         this.prepararUsuario = false;
-        // this.error = false;
+        this.error = false;
       },
       (err: any) => {
         console.log(err);
@@ -245,10 +243,8 @@ export class UsuariosComponent implements OnInit {
         this.prepararUsuario = false;
         this.error = false;
       },
-
       (err: any) => {
         this.error = true;
-        console.log(err);
       }
     )
   }
@@ -266,11 +262,7 @@ export class UsuariosComponent implements OnInit {
       },
 
       (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
+        this.error = true;
       }
     )
   }

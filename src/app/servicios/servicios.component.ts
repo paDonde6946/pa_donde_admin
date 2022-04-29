@@ -25,6 +25,7 @@ export class ServiciosComponent implements OnInit {
 
   // Loader
   cargando: boolean = true;
+  error: boolean = false;
 
   // Constructor del componente servicios
   constructor(
@@ -52,12 +53,12 @@ export class ServiciosComponent implements OnInit {
 
     await this.coreService.get('/servicio/listarServicio').subscribe(
       (res: any) => {
+        this.cargando = false;
         this.registroLista = res.listaServicio;
         this.totalRecords = this.registroLista.length;
         this.registroLista.forEach(element => {
           element.estado = this.estado[element.estado];
         });
-        this.cargando = false;
       },
       (err: any) => {
         console.log(err);
@@ -84,17 +85,12 @@ export class ServiciosComponent implements OnInit {
 
     this.coreService.put('/servicio/cambiarEstado', params).subscribe(
       (res: any) => {
-
+        this.error = false;
         this.msj.info("Estado actualizado exitosamente");
         this.getListadoServicios();
       },
-
       (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
+        this.error = true;
       }
     )
   }

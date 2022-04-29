@@ -33,6 +33,7 @@ export class VehiculosComponent implements OnInit {
 
   // Loader
   cargando: boolean = true;
+  error: boolean = false;
 
   // Formulario para agregar el vehiculo
   formularioVehiculo = new FormGroup({
@@ -76,17 +77,17 @@ export class VehiculosComponent implements OnInit {
   async getListadoVehiculos() {
     await this.coreService.get('/vehiculos/listarVehiculos').subscribe(
       (res: any) => {
+        this.error = false;
+        this.prepararVehiculo = false;
         this.listaVehiculos = res.listadoVehiculo;
+        this.cargando = false;
         this.listaVehiculos.forEach(element => {
           element.tipoVehiculoLabel = this.tipoVehiculo[element.tipoVehiculo];
           element.estadoLabel = this.estado[element.estado]
         });
-        this.prepararVehiculo = false;
-        this.cargando = false;
-
       },
       (err: any) => {
-        console.log(err);
+        this.error = true;
       }
     )
   }
@@ -98,15 +99,12 @@ export class VehiculosComponent implements OnInit {
     }
     this.coreService.put('/vehiculos/cambiarEstado', id).subscribe(
       (res: any) => {
-        if (res.ok) {
           this.msj.info("Estado actualizado exitosamente");
           this.getCargarDatos();
-        } else {
-          this.msj.error("Lo sentimos tenemos un problema");
-        }
+          this.error = false;
       },
       (err: any) => {
-        console.log(err);
+        this.error = true;
       }
     )
   }
@@ -186,13 +184,10 @@ export class VehiculosComponent implements OnInit {
         this.msj.info('Vehículo Guardado Correctamente');
         this.getListadoVehiculos();
         this.prepararVehiculo = false;
+        this.error = false;
       },
       (err: any) => {
-        if (err.errors.error !== undefined && err.errors.error !== null) {
-          for (let index = 0; index < err.errors.error.length; index++) {
-            this.msj.error(err.errors.error[index]);
-          }
-        }
+        this.error = true;
       }
     )
   }
